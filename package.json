@@ -1,0 +1,29 @@
+{
+  "name": "komfocare-platform",
+  "version": "1.0.0",
+  "description": "KomfoCare — Modern Home-Based Healthcare Platform",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix backend & npm run dev --prefix frontend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "build": "npm run build --prefix backend && npm run build --prefix frontend",
+    "build:backend": "npm run build --prefix backend",
+    "build:frontend": "npm run build --prefix frontend",
+    "seed": "npm run seed --prefix backend",
+    "prisma:generate": "npm run prisma:generate --prefix backend",
+    "prisma:migrate": "npm run prisma:migrate --prefix backend"
+  },
+  "keywords": [
+    "healthcare",
+    "home-care",
+    "react",
+    "vite",
+    "express",
+    "prisma",
+    "typescript",
+    "railway"
+  ],
+  "author": "KomfoCare Team",
+  "license": "ISC"
+}

@@ -1,0 +1,410 @@
+// KomfoCare Prisma Schema
+// Designed for PostgreSQL (Railway) & modern home-based healthcare
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  PATIENT
+  FAMILY_CAREGIVER
+  HEALTHCARE_PROFESSIONAL
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum RequestStatus {
+  REQUESTED
+  PENDING_REVIEW
+  ASSESSMENT
+  CONFIRMED
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum AppointmentStatus {
+  REQUESTED
+  PENDING_REVIEW
+  CONFIRMED
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  PAID
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum NotificationType {
+  INFO
+  APPOINTMENT
+  VISIT
+  PAYMENT
+  ALERT
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  fullName     String
+  phoneNumber  String?
+  role         Role      @default(PATIENT)
+  avatarUrl    String?
+  isActive     Boolean   @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Relationships
+  patientProfile      Patient?
+  professionalProfile HealthcareProfessional?
+  notifications       Notification[]
+  auditLogs           AuditLog[]
+  serviceRequests     ServiceRequest[]
+
+  @@index([email])
+  @@index([role])
+}
+
+model Patient {
+  id                       String   @id @default(uuid())
+  userId                   String?  @unique
+  user                     User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  fullName                 String
+  dateOfBirth              DateTime?
+  gender                   String?
+  phoneNumber              String
+  email                    String?
+  address                  String
+  city                     String   @default("Nairobi")
+  emergencyContactName     String
+  emergencyContactPhone    String
+  emergencyContactRelation String?
+  medicalHistoryNotes      String?
+  knownAllergies           String?
+  mobilityNeeds            String?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  // Relationships
+  appointments             Appointment[]
+  carePlans                CarePlan[]
+  visitRecords             VisitRecord[]
+  vitalSigns               VitalSign[]
+  payments                 Payment[]
+  invoices                 Invoice[]
+
+  @@index([fullName])
+  @@index([phoneNumber])
+}
+
+model HealthcareProfessional {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title            String   @default("Nurse") // Dr., Nurse, Clinical Officer, Physiotherapist
+  fullName         String
+  roleTitle        String   // "Registered Nurse (RN)", "Palliative Care Specialist", "Physical Therapist"
+  qualifications   String   // "BSc Nursing, BLS Certified, Wound Care Specialist"
+  areasOfPractice  String   // "Home Nursing, Elderly Care, Post-Surgery Recovery"
+  experienceYears  Int      @default(5)
+  bio              String?
+  licenseNumber    String?  // Masked or admin-verified
+  isPublic         Boolean  @default(true)
+  isAvailable      Boolean  @default(true)
+  rating           Float    @default(5.0)
+  totalVisits      Int      @default(0)
+  photoUrl         String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relationships
+  assignedRequests ServiceRequest[]
+  appointments     Appointment[]
+  visitRecords     VisitRecord[]
+
+  @@index([isPublic, isAvailable])
+}
+
+model Service {
+  id               String   @id @default(uuid())
+  slug             String   @unique
+  title            String
+  shortDescription String
+  fullDescription  String
+  category         String   @default("Home Care")
+  basePrice        Float    @default(0.0)
+  currency         String   @default("KES")
+  durationMinutes  Int      @default(60)
+  iconName         String   @default("HeartHandshake")
+  imageUrl         String?
+  benefits         String?  // JSON array string
+  includedItems    String?  // JSON array string
+  faqs             String?  // JSON array string
+  isActive         Boolean  @default(true)
+  displayOrder     Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relationships
+  serviceRequests  ServiceRequest[]
+  appointments     Appointment[]
+
+  @@index([slug])
+  @@index([isActive])
+}
+
+model ServiceRequest {
+  id                      String         @id @default(uuid())
+  referenceNumber         String         @unique // e.g. KC-2026-9841
+  serviceId               String
+  service                 Service        @relation(fields: [serviceId], references: [id])
+  userId                  String?
+  user                    User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  patientName             String
+  patientPhone            String
+  patientEmail            String?
+  patientDob              DateTime?
+  patientLocation         String
+  city                    String         @default("Nairobi")
+  emergencyContactName    String
+  emergencyContactPhone   String
+  careRequirements        String
+  preferredDate           DateTime
+  preferredTimeSlot       String         // e.g. "09:00 AM - 12:00 PM"
+  mobilityStatus          String?
+  additionalNotes         String?
+  status                  RequestStatus  @default(REQUESTED)
+  assignedProfessionalId  String?
+  assignedProfessional    HealthcareProfessional? @relation(fields: [assignedProfessionalId], references: [id])
+  internalReviewNotes     String?
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+
+  appointments            Appointment[]
+
+  @@index([referenceNumber])
+  @@index([status])
+}
+
+model Appointment {
+  id                 String             @id @default(uuid())
+  referenceNumber    String             @unique
+  serviceRequestId   String?
+  serviceRequest     ServiceRequest?    @relation(fields: [serviceRequestId], references: [id], onDelete: SetNull)
+  patientId          String
+  patient            Patient            @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  professionalId     String?
+  professional       HealthcareProfessional? @relation(fields: [professionalId], references: [id], onDelete: SetNull)
+  serviceId          String
+  service            Service            @relation(fields: [serviceId], references: [id])
+  scheduledDate      DateTime
+  scheduledTimeSlot  String
+  status             AppointmentStatus  @default(REQUESTED)
+  locationAddress    String
+  notes              String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  visitRecord        VisitRecord?
+  payments           Payment[]
+
+  @@index([scheduledDate])
+  @@index([status])
+}
+
+model CarePlan {
+  id           String   @id @default(uuid())
+  patientId    String
+  patient      Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  title        String
+  goals        String
+  frequency    String   // "2x weekly", "Daily", "Alternate days"
+  startDate    DateTime
+  endDate      DateTime?
+  status       String   @default("Active") // Active, Paused, Completed
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([patientId])
+}
+
+model VisitRecord {
+  id                     String      @id @default(uuid())
+  appointmentId          String?     @unique
+  appointment            Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+  patientId              String
+  patient                Patient     @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  professionalId         String
+  professional           HealthcareProfessional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  visitDate              DateTime    @default(now())
+  servicesProvided       String
+  clinicalObservations   String
+  patientResponse        String?
+  followUpRecommendation String?
+  privateNotes           String?
+  createdAt              DateTime    @default(now())
+  updatedAt              DateTime    @updatedAt
+
+  vitalSigns             VitalSign[]
+
+  @@index([patientId])
+  @@index([visitDate])
+}
+
+model VitalSign {
+  id              String       @id @default(uuid())
+  patientId       String
+  patient         Patient      @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  visitRecordId   String?
+  visitRecord     VisitRecord? @relation(fields: [visitRecordId], references: [id], onDelete: SetNull)
+  recordedByName  String
+  systolicBP      Int?         // mmHg (e.g. 120)
+  diastolicBP     Int?         // mmHg (e.g. 80)
+  heartRate       Int?         // bpm (e.g. 72)
+  respiratoryRate Int?         // breaths/min (e.g. 16)
+  spO2            Float?       // % (e.g. 98.5)
+  bloodGlucose    Float?       // mmol/L (e.g. 5.6)
+  temperature     Float?       // °C (e.g. 36.6)
+  notes           String?
+  recordedAt      DateTime     @default(now())
+
+  @@index([patientId])
+  @@index([recordedAt])
+}
+
+model Payment {
+  id             String        @id @default(uuid())
+  invoiceNumber  String        @unique
+  appointmentId  String?
+  appointment    Appointment?  @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+  patientId      String
+  patient        Patient       @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  amount         Float
+  currency       String        @default("KES")
+  status         PaymentStatus @default(PENDING)
+  paymentMethod  String        @default("M-Pesa / Card")
+  transactionRef String?
+  receiptUrl     String?
+  paidAt         DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([invoiceNumber])
+  @@index([status])
+}
+
+model Invoice {
+  id            String   @id @default(uuid())
+  invoiceNumber String   @unique
+  patientId     String
+  patient       Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  amount        Float
+  currency      String   @default("KES")
+  dueDate       DateTime
+  status        String   @default("Unpaid") // Unpaid, Paid, Overdue
+  itemsJson     String   // JSON list of line items
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([invoiceNumber])
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  type      NotificationType @default(INFO)
+  isRead    Boolean          @default(false)
+  link      String?
+  createdAt DateTime         @default(now())
+
+  @@index([userId, isRead])
+}
+
+model Testimonial {
+  id                 String   @id @default(uuid())
+  name               String
+  roleOrRelationship String   // e.g. "Daughter of Elderly Client", "Post-Surgery Patient"
+  rating             Int      @default(5)
+  content            String
+  location           String   @default("Nairobi, Kenya")
+  isApproved         Boolean  @default(true)
+  isFeatured         Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([isApproved])
+}
+
+model HealthResource {
+  id              String   @id @default(uuid())
+  slug            String   @unique
+  title           String
+  excerpt         String
+  content         String
+  category        String   // Home Care, Elderly Care, Recovery, Medication Adherence, etc.
+  readTimeMinutes Int      @default(5)
+  featuredImage   String?
+  authorName      String   @default("KomfoCare Clinical Team")
+  authorRole      String   @default("Healthcare Editorial Board")
+  tags            String?  // JSON array string
+  isPublished     Boolean  @default(true)
+  metaTitle       String?
+  metaDescription String?
+  publishedAt     DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isPublished])
+  @@index([category])
+}
+
+model ServiceArea {
+  id             String   @id @default(uuid())
+  name           String   // e.g. "Westlands & Kilimani", "Karen & Langata", "Lavington & Kileleshwa"
+  countyOrRegion String   @default("Nairobi Metropolitan")
+  country        String   @default("Kenya")
+  isOperational  Boolean  @default(true)
+  description    String
+  coveragePoints String?  // JSON array or description
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([isOperational])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action     String   // e.g. "USER_LOGIN", "SERVICE_REQUEST_STATUS_UPDATED", "VISIT_RECORDED"
+  entityType String   // "Appointment", "ServiceRequest", "Patient"
+  entityId   String?
+  details    String?  // JSON text or detail summary
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
