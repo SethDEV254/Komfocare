@@ -9,8 +9,8 @@ import {
   Calendar,
   Stethoscope,
   BookOpen,
-  ArrowRight,
-  CheckCircle2,
+  ArrowUpRight,
+  Sparkles,
 } from 'lucide-react';
 import { Service } from '../../types';
 import { apiClient } from '../../api/client';
@@ -18,194 +18,178 @@ import { formatCurrency } from '../../utils/formatters';
 
 export const ServicesPage: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
-  const [categoryFilter, setCategoryFilter] = useState<string>('All');
+  const [activeCategory, setActiveCategory] = useState<string>('ALL');
 
   const defaultServices = [
     {
       slug: 'home-nursing-care',
       title: 'Home Nursing Care',
-      shortDescription: 'Professional clinical nursing support delivered with compassion in the comfort of your home.',
-      category: 'Clinical Care',
+      shortDescription: 'Professional clinical nursing support delivered with compassion. Sterile dressing changes, IV therapy, injection administration, and clinical assessment.',
+      category: 'CLINICAL CARE',
       durationMinutes: 120,
       basePrice: 4500,
-      currency: 'KES',
-      icon: Heart,
+      imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800',
+      index: '01',
     },
     {
       slug: 'elderly-care',
-      title: 'Elderly Care',
-      shortDescription: 'Compassionate, dignified, and attentive home care tailored specifically for senior loved ones.',
-      category: 'Senior Support',
+      title: 'Elderly & Geriatric Support',
+      shortDescription: 'Compassionate, dignified, and attentive home care tailored specifically for senior loved ones. Daily living support, mobility assistance, and companionship.',
+      category: 'GERIATRIC CARE',
       durationMinutes: 180,
       basePrice: 3500,
-      currency: 'KES',
-      icon: Users,
+      imageUrl: 'https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?auto=format&fit=crop&q=80&w=800',
+      index: '02',
     },
     {
       slug: 'post-surgery-care',
-      title: 'Post-Surgery Care',
-      shortDescription: 'Comprehensive recovery and rehabilitation support following hospital discharge.',
-      category: 'Recovery',
+      title: 'Post-Surgery Home Recovery',
+      category: 'REHABILITATION',
+      shortDescription: 'Comprehensive recovery and rehabilitation support following hospital discharge. Incision surveillance, infection mitigation, and pain management.',
       durationMinutes: 120,
       basePrice: 5000,
-      currency: 'KES',
-      icon: Activity,
+      imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800',
+      index: '03',
     },
     {
       slug: 'medication-management',
       title: 'Medication Management',
-      shortDescription: 'Reliable support with prescribed medication routines, schedules, and reminders.',
-      category: 'Wellness',
+      category: 'CLINICAL CARE',
+      shortDescription: 'Reliable support with prescribed medication routines, schedules, multi-drug interaction reviews, and caregiver dosage tracking.',
       durationMinutes: 60,
       basePrice: 2800,
-      currency: 'KES',
-      icon: Pill,
+      imageUrl: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=800',
+      index: '04',
     },
     {
       slug: 'palliative-care',
-      title: 'Palliative Care',
-      shortDescription: 'Comfort, dignity, and quality-of-life focused holistic home care for complex conditions.',
-      category: 'Specialized Care',
-      durationMinutes: 180,
+      title: 'Palliative & Comfort Care',
+      category: 'HOLISTIC CARE',
+      shortDescription: 'Comfort, dignity, and quality-of-life focused holistic home care for patients with chronic conditions, accompanied by family counseling.',
+      durationMinutes: 240,
       basePrice: 6000,
-      currency: 'KES',
-      icon: ShieldCheck,
+      imageUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=800',
+      index: '05',
     },
     {
       slug: 'patient-escort',
-      title: 'Patient Escort',
-      shortDescription: 'Professional bedside-to-appointment accompaniment for hospital visits and therapy.',
-      category: 'Mobility',
-      durationMinutes: 240,
+      title: 'Patient Medical Escort',
+      category: 'SUPPORT SERVICES',
+      shortDescription: 'Professional clinical bedside-to-appointment accompaniment for outpatient procedures, chemotherapy sessions, or dialysis transport.',
+      durationMinutes: 180,
       basePrice: 3800,
-      currency: 'KES',
-      icon: Calendar,
+      imageUrl: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&q=80&w=800',
+      index: '06',
     },
     {
       slug: 'vital-signs-monitoring',
-      title: 'Vital Signs Monitoring',
-      shortDescription: 'Systematic monitoring of vital parameters by certified clinicians to spot trends early.',
-      category: 'Preventive',
-      durationMinutes: 45,
+      title: 'Vital Signs & Biomarkers',
+      category: 'DIAGNOSTIC CARE',
+      shortDescription: 'Systematic clinical monitoring of Blood Pressure, SpO2, Heart Rhythm, and Blood Glucose curves with digital logging and early trend alerts.',
+      durationMinutes: 60,
       basePrice: 2500,
-      currency: 'KES',
-      icon: Stethoscope,
+      imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=800',
+      index: '07',
     },
     {
       slug: 'health-education',
-      title: 'Health Education',
-      shortDescription: 'Guidance and practical training for patients and family caregivers.',
-      category: 'Education',
+      title: 'Health & Caregiver Education',
+      category: 'FAMILY TRAINING',
+      shortDescription: 'Hands-on practical training and clinical guidance for family caregivers on safe patient transfers, hygiene routines, and emergency protocols.',
       durationMinutes: 90,
       basePrice: 3000,
-      currency: 'KES',
-      icon: BookOpen,
+      imageUrl: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&q=80&w=800',
+      index: '08',
     },
   ];
 
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const res = await apiClient<{ success: boolean; data: Service[] }>('/services');
-        if (res.success && res.data.length > 0) {
-          setServices(res.data);
-        }
-      } catch {
-        // use fallback
-      }
-    };
-    fetchServices();
-  }, []);
+  const categories = ['ALL', 'CLINICAL CARE', 'GERIATRIC CARE', 'REHABILITATION', 'DIAGNOSTIC CARE', 'HOLISTIC CARE', 'SUPPORT SERVICES', 'FAMILY TRAINING'];
 
-  const displayList = services.length > 0 ? services : (defaultServices as any);
-
-  const categories = ['All', 'Clinical Care', 'Senior Support', 'Recovery', 'Wellness', 'Specialized Care'];
-
-  const filteredServices = categoryFilter === 'All'
-    ? displayList
-    : displayList.filter((s: any) => s.category === categoryFilter);
+  const filteredServices =
+    activeCategory === 'ALL'
+      ? defaultServices
+      : defaultServices.filter((s) => s.category.toUpperCase() === activeCategory);
 
   return (
-    <div className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <span className="text-xs font-bold uppercase tracking-wider text-komfo-600">
-          Comprehensive Services
-        </span>
-        <h1 className="text-4xl sm:text-5xl font-extrabold font-display text-navy-900 tracking-tight">
-          Home-Based Healthcare Services
+    <div className="py-12 sm:py-20 space-y-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Header Section */}
+      <div className="space-y-4 max-w-3xl">
+        <div className="text-label">CLINICAL SERVICES / 08 DISCIPLINES</div>
+        <h1 className="text-4xl sm:text-6xl font-extrabold text-display-massive text-white tracking-tight">
+          Comprehensive Clinical Home Care.
         </h1>
-        <p className="text-base text-slate-600 leading-relaxed">
-          Explore our range of personalized in-home clinical nursing, elderly companionship, surgical recovery, and vital signs monitoring services.
+        <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
+          Explore our eight specialized home-based healthcare disciplines delivered by certified, background-checked registered nurses and practitioners across Nairobi.
         </p>
-
-        {/* Category Filters */}
-        <div className="flex items-center justify-center gap-2 pt-4 overflow-x-auto flex-wrap">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setCategoryFilter(cat)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
-                categoryFilter === cat
-                  ? 'bg-navy-900 text-white shadow-sm'
-                  : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
       </div>
 
-      {/* Services Grid */}
+      {/* Category Filter Chips Bar */}
+      <div className="flex items-center flex-wrap gap-2 pt-2 border-b border-white/10 pb-6">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            type="button"
+            onClick={() => setActiveCategory(cat)}
+            className={`px-4 py-2 rounded-full text-[11px] font-mono uppercase tracking-wider transition-all duration-300 border ${
+              activeCategory === cat
+                ? 'bg-komfo-600 text-white border-komfo-400 shadow-glow font-bold'
+                : 'bg-white/5 text-slate-400 border-white/10 hover:border-white/25 hover:text-white'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {/* Sleek Services Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredServices.map((service: any) => {
-          return (
-            <div
-              key={service.slug}
-              className="bg-white rounded-3xl p-8 border border-slate-200 shadow-subtle hover:shadow-elevated transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
-            >
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-komfo-50 text-komfo-600 flex items-center justify-center mb-6 group-hover:bg-komfo-600 group-hover:text-white transition-colors duration-300 shadow-sm">
-                  <Heart className="w-6 h-6" />
-                </div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-komfo-600">
-                  {service.category}
+        {filteredServices.map((serv) => (
+          <Link
+            key={serv.slug}
+            to={`/services/${serv.slug}`}
+            className="group relative rounded-3xl overflow-hidden glass-card flex flex-col justify-between transition-all duration-500 hover:-translate-y-1.5"
+          >
+            {/* Image Container */}
+            <div className="relative h-64 sm:h-72 w-full overflow-hidden">
+              <img
+                src={serv.imageUrl}
+                alt={serv.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0f0514] via-[#0f0514]/40 to-transparent" />
+
+              {/* Badges */}
+              <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                <span className="text-[11px] font-mono uppercase tracking-wider px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-amber-300 font-bold">
+                  {serv.category}
                 </span>
-                <h3 className="text-xl font-bold text-navy-900 mt-1 mb-2">
-                  {service.title}
+                <span className="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/15 flex items-center justify-center text-xs font-mono font-bold text-slate-300 group-hover:border-komfo-400 group-hover:text-komfo-300 transition-colors">
+                  {serv.index}
+                </span>
+              </div>
+            </div>
+
+            {/* Card Content */}
+            <div className="p-6 space-y-4 flex-1 flex flex-col justify-between -mt-6 relative z-10">
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold font-display text-white group-hover:text-komfo-300 transition-colors flex items-center justify-between">
+                  <span>{serv.title}</span>
+                  <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-komfo-300 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  {service.shortDescription}
+                <p className="text-xs text-slate-300/80 leading-relaxed font-sans line-clamp-3">
+                  {serv.shortDescription}
                 </p>
               </div>
 
-              <div className="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between">
-                <div>
-                  <span className="text-[10px] text-slate-400 font-medium block">Starting from</span>
-                  <span className="font-bold text-navy-900 text-sm">
-                    {formatCurrency(service.basePrice, service.currency || 'KES')}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Link
-                    to={`/services/${service.slug}`}
-                    className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-komfo-600 hover:bg-komfo-50 transition-colors"
-                  >
-                    Details
-                  </Link>
-                  <Link
-                    to={`/book-care?service=${service.slug}`}
-                    className="px-4 py-2 rounded-xl bg-navy-900 hover:bg-navy-950 text-white font-semibold text-xs transition-colors shadow-sm"
-                  >
-                    Book Now
-                  </Link>
-                </div>
+              <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono">
+                <span className="text-slate-400">From {formatCurrency(serv.basePrice)}</span>
+                <span className="text-amber-400/90 font-bold uppercase tracking-wider">
+                  {serv.durationMinutes} Min
+                </span>
               </div>
             </div>
-          );
-        })}
+          </Link>
+        ))}
       </div>
     </div>
   );

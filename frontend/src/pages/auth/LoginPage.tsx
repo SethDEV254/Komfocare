@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heart, Lock, Mail, ShieldCheck, UserCheck, AlertCircle, ArrowRight, Sparkles } from 'lucide-react';
+import { Heart, Lock, Mail, ShieldCheck, UserCheck, AlertCircle, ArrowUpRight, Sparkles } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Role } from '../../types';
 
@@ -42,44 +42,44 @@ export const LoginPage: React.FC = () => {
 
   return (
     <div className="py-12 sm:py-20 max-w-md mx-auto px-4">
-      <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-elevated space-y-6">
+      <div className="rounded-3xl p-8 sm:p-10 glass-card border border-white/15 shadow-2xl space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <Link to="/" className="inline-flex items-center gap-2 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-navy-900 to-komfo-600 flex items-center justify-center text-white shadow-md">
+          <Link to="/" className="inline-flex items-center gap-2 mb-2 group">
+            <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-komfo-600 to-amber-500 flex items-center justify-center text-white shadow-glow group-hover:scale-105 transition-transform">
               <Heart className="w-5 h-5 fill-white/20" />
             </div>
           </Link>
-          <h2 className="text-2xl font-bold font-display text-navy-900">Sign in to KomfoCare</h2>
-          <p className="text-xs text-slate-500">Access your healthcare portal, visits, and patient records</p>
+          <h2 className="text-2xl font-bold font-display text-white">Sign in to KomfoCare</h2>
+          <p className="text-xs text-slate-400">Access your healthcare portal, visits, and patient records</p>
         </div>
 
         {/* 1-Click Demo Accounts Switcher */}
-        <div className="p-4 rounded-2xl bg-komfo-50/70 border border-komfo-200/80 space-y-2">
-          <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-komfo-800">
-            <Sparkles className="w-3.5 h-3.5 text-komfo-600" />
-            <span>1-Click Test Accounts</span>
+        <div className="p-4 rounded-2xl bg-[#1a0826] border border-komfo-500/30 space-y-2">
+          <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider text-amber-300">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>1-Click Test Portals</span>
           </div>
 
           <div className="grid grid-cols-3 gap-2 pt-1">
             <button
               type="button"
               onClick={() => handleDemoSignIn('SUPER_ADMIN')}
-              className="px-2.5 py-2 rounded-xl bg-white border border-komfo-200 text-[11px] font-bold text-navy-900 hover:bg-navy-900 hover:text-white transition-all shadow-sm text-center"
+              className="px-2.5 py-2 rounded-xl bg-white/5 hover:bg-komfo-600 border border-white/10 hover:border-komfo-400 text-[11px] font-mono font-bold text-white transition-all shadow-sm text-center"
             >
               Admin
             </button>
             <button
               type="button"
               onClick={() => handleDemoSignIn('HEALTHCARE_PROFESSIONAL')}
-              className="px-2.5 py-2 rounded-xl bg-white border border-komfo-200 text-[11px] font-bold text-navy-900 hover:bg-navy-900 hover:text-white transition-all shadow-sm text-center"
+              className="px-2.5 py-2 rounded-xl bg-white/5 hover:bg-komfo-600 border border-white/10 hover:border-komfo-400 text-[11px] font-mono font-bold text-white transition-all shadow-sm text-center"
             >
               Nurse Lead
             </button>
             <button
               type="button"
               onClick={() => handleDemoSignIn('PATIENT')}
-              className="px-2.5 py-2 rounded-xl bg-white border border-komfo-200 text-[11px] font-bold text-navy-900 hover:bg-navy-900 hover:text-white transition-all shadow-sm text-center"
+              className="px-2.5 py-2 rounded-xl bg-white/5 hover:bg-komfo-600 border border-white/10 hover:border-komfo-400 text-[11px] font-mono font-bold text-white transition-all shadow-sm text-center"
             >
               Patient
             </button>
@@ -87,16 +87,16 @@ export const LoginPage: React.FC = () => {
         </div>
 
         {errorMsg && (
-          <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-600" />
+          <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-400" />
             <span>{errorMsg}</span>
           </div>
         )}
 
         {/* Credentials Form */}
-        <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+        <form onSubmit={handleSubmit} className="space-y-4 text-xs font-sans">
           <div>
-            <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block font-mono text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">
               Email Address
             </label>
             <div className="relative">
@@ -107,15 +107,15 @@ export const LoginPage: React.FC = () => {
                 placeholder="name@komfocare.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-komfo-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-500 focus:ring-2 focus:ring-komfo-500 focus:outline-none"
               />
             </div>
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="font-bold text-slate-700 uppercase tracking-wider">Password</label>
-              <a href="#forgot" className="text-komfo-600 hover:underline text-[11px]">
+              <label className="font-mono text-[11px] font-bold text-slate-300 uppercase tracking-wider">Password</label>
+              <a href="#forgot" className="text-komfo-400 hover:underline text-[11px]">
                 Forgot password?
               </a>
             </div>
@@ -127,7 +127,7 @@ export const LoginPage: React.FC = () => {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-komfo-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-500 focus:ring-2 focus:ring-komfo-500 focus:outline-none"
               />
             </div>
           </div>
@@ -135,15 +135,15 @@ export const LoginPage: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 rounded-full bg-gradient-to-r from-navy-900 to-komfo-700 hover:from-navy-950 hover:to-komfo-800 text-white font-semibold text-xs shadow-md transition-all disabled:opacity-50 mt-2"
+            className="w-full py-3.5 rounded-full bg-gradient-to-r from-komfo-600 via-komfo-500 to-indigo-600 hover:from-komfo-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-widest shadow-glow hover:scale-[1.02] transition-all disabled:opacity-50 mt-2"
           >
             {isLoading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
 
-        <div className="text-center pt-2 border-t border-slate-100 text-xs text-slate-500">
+        <div className="text-center pt-2 border-t border-white/10 text-xs text-slate-400 font-sans">
           Don't have an account?{' '}
-          <Link to="/register" className="font-bold text-komfo-600 hover:underline">
+          <Link to="/register" className="font-bold text-komfo-400 hover:underline">
             Register here
           </Link>
         </div>

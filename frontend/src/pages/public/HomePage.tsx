@@ -5,6 +5,7 @@ import {
   ShieldCheck,
   Calendar,
   ArrowRight,
+  ArrowUpRight,
   CheckCircle2,
   Users,
   Activity,
@@ -19,6 +20,8 @@ import {
   Award,
   Lock,
   MessageCircle,
+  TrendingUp,
+  Check,
 } from 'lucide-react';
 import { Service, HealthcareProfessional, Testimonial, ServiceArea } from '../../types';
 import { apiClient } from '../../api/client';
@@ -29,9 +32,9 @@ export const HomePage: React.FC = () => {
   const [professionals, setProfessionals] = useState<HealthcareProfessional[]>([]);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [serviceAreas, setServiceAreas] = useState<ServiceArea[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string>('ALL');
 
   useEffect(() => {
-    // Fetch Homepage data from backend API with fallback defaults
     const loadHomeData = async () => {
       try {
         const [servRes, profRes, testRes, areaRes] = await Promise.allSettled([
@@ -54,70 +57,74 @@ export const HomePage: React.FC = () => {
           setServiceAreas(areaRes.value.data);
         }
       } catch (err) {
-        console.warn('Using default seed visuals for static preview');
+        // Fallbacks will render cleanly
       }
     };
 
     loadHomeData();
   }, []);
 
-  // Fallback defaults if API not ready
+  // Fallback defaults
   const defaultServices = [
     {
       slug: 'home-nursing-care',
       title: 'Home Nursing Care',
-      shortDescription: 'Professional clinical nursing support delivered with compassion in the comfort of your home.',
-      icon: Heart,
+      category: 'Clinical Care',
+      shortDescription: 'Licensed clinical nursing, sterile wound dressing, IV infusion management, and comprehensive vitals tracking at your bedside.',
+      imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800',
       price: 4500,
+      duration: '120 Min',
+      index: '01',
     },
     {
       slug: 'elderly-care',
-      title: 'Elderly Care',
-      shortDescription: 'Compassionate, dignified, and attentive home care tailored specifically for senior loved ones.',
-      icon: Users,
+      title: 'Elderly & Geriatric Support',
+      category: 'Geriatric Care',
+      shortDescription: 'Attentive companionship, mobility assistance, medication organizer scheduling, and dignity-centered daily routine support.',
+      imageUrl: 'https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?auto=format&fit=crop&q=80&w=800',
       price: 3500,
+      duration: '180 Min',
+      index: '02',
     },
     {
       slug: 'post-surgery-care',
-      title: 'Post-Surgery Care',
-      shortDescription: 'Comprehensive recovery and rehabilitation support following hospital discharge.',
-      icon: Activity,
+      title: 'Post-Surgery Home Recovery',
+      category: 'Rehabilitation',
+      shortDescription: 'Post-operative clinical surveillance, incision infection prevention, pain titration, and assisted rehabilitation transfers.',
+      imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800',
       price: 5000,
+      duration: '120 Min',
+      index: '03',
     },
     {
       slug: 'medication-management',
       title: 'Medication Management',
-      shortDescription: 'Reliable support with prescribed medication routines, schedules, and reminders.',
-      icon: Pill,
+      category: 'Pharmacotherapy',
+      shortDescription: 'Strict medication compliance reviews, multi-drug interaction screening, refill coordination, and caregiver dosage guidance.',
+      imageUrl: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=800',
       price: 2800,
-    },
-    {
-      slug: 'palliative-care',
-      title: 'Palliative Care',
-      shortDescription: 'Comfort, dignity, and quality-of-life focused holistic home care for complex conditions.',
-      icon: ShieldCheck,
-      price: 6000,
-    },
-    {
-      slug: 'patient-escort',
-      title: 'Patient Escort',
-      shortDescription: 'Professional bedside-to-appointment accompaniment for hospital visits and therapy.',
-      icon: Calendar,
-      price: 3800,
+      duration: '60 Min',
+      index: '04',
     },
     {
       slug: 'vital-signs-monitoring',
-      title: 'Vital Signs Monitoring',
-      shortDescription: 'Systematic monitoring of vital parameters by certified clinicians to spot trends early.',
-      icon: Stethoscope,
+      title: 'Vital Signs & Biomarkers',
+      category: 'Diagnostic Care',
+      shortDescription: 'Clinical assessment of Blood Pressure, SpO2, Heart Rhythm, Blood Glucose curves, and early deterioration risk mitigation.',
+      imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=800',
       price: 2500,
+      duration: '60 Min',
+      index: '05',
     },
     {
-      slug: 'health-education',
-      title: 'Health Education',
-      shortDescription: 'Guidance and practical training for patients and family caregivers.',
-      icon: BookOpen,
-      price: 3000,
+      slug: 'palliative-care',
+      title: 'Palliative & Comfort Care',
+      category: 'Holistic Care',
+      shortDescription: 'Empathetic symptom management, comfort-oriented physical relief, and emotional support tailored for complex chronic illnesses.',
+      imageUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=800',
+      price: 6000,
+      duration: '240 Min',
+      index: '06',
     },
   ];
 
@@ -126,139 +133,154 @@ export const HomePage: React.FC = () => {
       fullName: 'Nurse Sarah Ombati, RN',
       roleTitle: 'Senior Home Care Lead & Registered Nurse',
       qualifications: 'BSc Nursing (UoN), BLS Certified',
-      areasOfPractice: 'Home Nursing • Elderly Care • Chronic Disease Management',
+      areasOfPractice: 'Home Nursing • Elderly Care • Chronic Care',
       experienceYears: 9,
+      rating: 4.98,
+      totalVisits: 142,
       photoUrl: 'https://images.unsplash.com/photo-1594824813689-d758c5c7d0d0?auto=format&fit=crop&q=80&w=400',
     },
     {
       fullName: 'Nurse David Kiprop, RN',
       roleTitle: 'Post-Operative & Wound Care Specialist',
-      qualifications: 'Higher Dip Critical Care, Certified Wound Specialist',
-      areasOfPractice: 'Post-Surgery Care • Complex Wound Dressing • IV Therapy',
+      qualifications: 'Higher Dip Critical Care, Wound Specialist',
+      areasOfPractice: 'Post-Surgery Care • Sterile Dressing • IV Therapy',
       experienceYears: 7,
+      rating: 4.95,
+      totalVisits: 118,
       photoUrl: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400',
     },
     {
-      fullName: 'Dr. Evans Mwangi, CO',
-      roleTitle: 'Clinical Officer & Medical Assessments Lead',
-      qualifications: 'BSc Clinical Medicine, ACLS Certified',
-      areasOfPractice: 'Comprehensive Health Assessments • Vital Monitoring',
-      experienceYears: 12,
-      photoUrl: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=400',
-    },
-    {
-      fullName: 'Grace Wanjiku, PT',
-      roleTitle: 'Home Physical & Mobility Specialist',
-      qualifications: 'BSc Physiotherapy, Orthopedic Rehab',
-      areasOfPractice: 'Post-Stroke Rehab • Mobility Enhancement • Fall Prevention',
-      experienceYears: 8,
+      fullName: 'Nurse Faith Wanjiru, RN',
+      roleTitle: 'Geriatric & Palliative Care Clinician',
+      qualifications: 'BSc Nursing, Gerontology Certified',
+      areasOfPractice: 'Elderly Care • Palliative Support • Dementia Care',
+      experienceYears: 11,
+      rating: 4.99,
+      totalVisits: 215,
       photoUrl: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400',
     },
   ];
 
-  const defaultTestimonials = [
-    {
-      name: 'Catherine Mwangi',
-      roleOrRelationship: 'Daughter of Elderly Client',
-      rating: 5,
-      content: 'KomfoCare has brought immense peace of mind to our family. Nurse Sarah visits my 82-year-old mother twice a week with such kindness and professionalism. We receive instant updates after every visit.',
-      location: 'Kilimani, Nairobi',
-    },
-    {
-      name: 'James Omondi',
-      roleOrRelationship: 'Post-Surgery Patient',
-      rating: 5,
-      content: 'After my knee replacement, traveling to the hospital every 3 days for dressing was daunting. KomfoCare arranged for Nurse David to come home. My recovery was smooth, comfortable, and infection-free.',
-      location: 'Westlands, Nairobi',
-    },
-    {
-      name: 'Grace & Anthony Njuguna',
-      roleOrRelationship: 'Family Caregivers',
-      rating: 5,
-      content: 'The booking process was seamless, and the caregiver education session taught us how to safely assist our father with mobility. Truly a world-class home healthcare platform.',
-      location: 'Karen, Nairobi',
-    },
-  ];
+  const categories = ['ALL', 'CLINICAL CARE', 'GERIATRIC CARE', 'REHABILITATION', 'DIAGNOSTIC CARE', 'HOLISTIC CARE'];
+
+  const filteredServices =
+    activeCategory === 'ALL'
+      ? defaultServices
+      : defaultServices.filter((s) => s.category.toUpperCase() === activeCategory);
 
   return (
-    <div className="space-y-20 sm:space-y-28">
-      {/* 1. HERO SECTION */}
-      <section className="relative pt-6 pb-12 sm:pt-12 sm:pb-20 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-            {/* Left Content */}
-            <div className="lg:col-span-7 space-y-6 sm:space-y-8 text-center lg:text-left">
-              {/* Trust Pill */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-komfo-100/80 border border-komfo-200 text-komfo-800 text-xs font-semibold shadow-sm">
-                <ShieldCheck className="w-4 h-4 text-komfo-600" />
-                <span>Professional Support • Personalized Care • Delivered at Home</span>
-              </div>
+    <div className="space-y-24 sm:space-y-36 pb-24 overflow-hidden">
+      {/* ========================================================
+          HERO SECTION — Massive Editorial Sleek Aesthetics
+      ======================================================== */}
+      <section className="relative pt-8 sm:pt-16 pb-12 sm:pb-20">
+        {/* Subtle background ambient glowing orbs */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-komfo-600/15 rounded-full blur-[140px] pointer-events-none -z-10" />
+        <div className="absolute top-1/3 right-10 w-[300px] h-[300px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none -z-10" />
 
-              {/* Main Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-display text-navy-900 tracking-tight leading-[1.15]">
-                Compassionate Care, <br />
-                <span className="text-gradient">Right at Home.</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Micro Meta Label */}
+          <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
+            <div className="text-label">NAIROBI METRO HOME HEALTHCARE</div>
+            <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-mono text-slate-400 bg-white/5 border border-white/10 px-3 py-1 rounded-full">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>CLINICAL DISPATCH ACTIVE</span>
+            </div>
+          </div>
+
+          {/* Asymmetric Hero Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* Left Content Column */}
+            <div className="lg:col-span-7 space-y-6 sm:space-y-8">
+              <h1 className="text-4xl sm:text-6xl xl:text-7xl font-extrabold text-display-massive text-white tracking-tight leading-[0.95]">
+                Compassionate <span className="text-transparent bg-clip-text bg-gradient-to-r from-komfo-400 via-purple-300 to-amber-300">Clinical Care</span>, Right at Home.
               </h1>
 
-              {/* Supporting Copy */}
-              <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
-                Professional home-based healthcare services designed around the needs of you and your loved ones. Connecting families with verified registered nurses and healthcare professionals.
+              <p className="text-sm sm:text-base text-slate-300/90 max-w-2xl leading-relaxed font-sans">
+                KomfoCare connects families with licensed registered nurses, geriatric specialists, and post-surgery clinicians. Receive personalized, hospital-grade care in the comfort and dignity of your home.
               </p>
 
-              {/* Primary & Secondary CTAs */}
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link
                   to="/book-care"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-navy-900 to-komfo-700 hover:from-navy-950 hover:to-komfo-800 text-white font-semibold text-sm shadow-md hover:shadow-xl transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-komfo-600 via-komfo-500 to-indigo-600 hover:from-komfo-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-widest shadow-glow hover:scale-105 transition-all duration-300"
                 >
-                  <Calendar className="w-4 h-4" />
-                  <span>Book Home Care</span>
+                  <span>Book Home Care Visit</span>
+                  <ArrowUpRight className="w-4 h-4" />
                 </Link>
 
                 <Link
                   to="/services"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white hover:bg-slate-100 text-navy-900 font-semibold text-sm border border-slate-300 shadow-subtle transition-all"
+                  className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white font-semibold text-xs uppercase tracking-wider transition-all duration-300"
                 >
-                  <span>Explore Our Services</span>
-                  <ArrowRight className="w-4 h-4 text-komfo-600" />
+                  <span>Explore 8 Disciplines</span>
                 </Link>
               </div>
 
-              {/* Key Trust Checkmarks */}
-              <div className="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-600 border-t border-slate-200/80">
-                <div className="flex items-center justify-center lg:justify-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span>Verified Registered Clinicians</span>
+              {/* Micro-Meta Badges */}
+              <div className="flex items-center flex-wrap gap-y-2 gap-x-6 pt-4 text-[11px] uppercase tracking-widest text-slate-400 font-mono border-t border-white/10">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                  <span>Licensed Nurses (NCK)</span>
                 </div>
-                <div className="flex items-center justify-center lg:justify-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span>Individualized Care Plans</span>
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-komfo-400" />
+                  <span>24/7 Triage Response</span>
                 </div>
-                <div className="flex items-center justify-center lg:justify-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span>Family Visit Progress Updates</span>
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span>Digital Vitals Log</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Hero Image Card */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100 aspect-[4/3] sm:aspect-[4/3] lg:aspect-[4/5]">
-                <img
-                  src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&q=80&w=800"
-                  alt="Compassionate healthcare professional providing personalized care to an elderly patient at home"
-                  className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
-                />
+            {/* Right Hero Showcase Visual Card */}
+            <div className="lg:col-span-5">
+              <div className="relative group rounded-3xl overflow-hidden glass-card p-2 border border-white/15 shadow-2xl">
+                <div className="relative h-80 sm:h-[420px] rounded-2xl overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1000"
+                    alt="Nurse providing home healthcare"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#08000a] via-black/30 to-transparent" />
 
-                {/* Glass Float Card 1: Active Care Notice */}
-                <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl glass-panel text-slate-900 shadow-elevated">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-komfo-600 text-white flex items-center justify-center flex-shrink-0 shadow-md">
-                      <Heart className="w-5 h-5" />
+                  {/* Top floating pill */}
+                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                    <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10px] font-mono uppercase tracking-wider text-amber-300 font-bold">
+                      KC CLINICAL DISPATCH
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-400/30 text-[10px] font-mono text-emerald-300 font-bold flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      AVAILABLE NOW
+                    </span>
+                  </div>
+
+                  {/* Bottom Floating Stats Overlay Card */}
+                  <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-[#0f0514]/90 backdrop-blur-xl border border-white/15 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-komfo-600 to-indigo-500 flex items-center justify-center font-bold text-white text-xs">
+                          SO
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-white">Nurse Sarah Ombati, RN</p>
+                          <p className="text-[10px] text-slate-400">Senior Home Care Lead</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="flex items-center gap-1 text-amber-400 text-xs font-bold">
+                          <Star className="w-3 h-3 fill-amber-400" />
+                          <span>4.98</span>
+                        </div>
+                        <span className="text-[9px] text-slate-400 font-mono">142 Visits</span>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-xs text-navy-900">Personalized Home Visit Protocol</h4>
-                      <p className="text-[11px] text-slate-600">Vitals logged • Dressings managed • Doctor notes</p>
+
+                    <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-slate-300">
+                      <span>Recent Vitals Recorded:</span>
+                      <span className="text-emerald-400 font-bold">BP 120/80 • SpO2 99%</span>
                     </div>
                   </div>
                 </div>
@@ -268,423 +290,314 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. SERVICES SECTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-komfo-600">
-            Our Healthcare Services
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-navy-900 tracking-tight">
-            Comprehensive Care in Your Home
-          </h2>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            From licensed nursing support to geriatric assistance and post-operative recovery, our clinicians provide dedicated attention right in your living room.
-          </p>
+      {/* ========================================================
+          SERVICES CATALOG / CASE CARDS — Sleek Gallery Grid
+      ======================================================== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+          <div className="space-y-2">
+            <div className="text-label">OUR SERVICES / 08 DISCIPLINES</div>
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-display-massive text-white tracking-tight">
+              Clinical Excellence in Your Sanctuary.
+            </h2>
+          </div>
+
+          {/* Category Chips Bar (nex101 style) */}
+          <div className="flex items-center flex-wrap gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-2 rounded-full text-[11px] font-mono uppercase tracking-wider transition-all duration-300 border ${
+                  activeCategory === cat
+                    ? 'bg-komfo-600 text-white border-komfo-400 shadow-glow font-bold'
+                    : 'bg-white/5 text-slate-400 border-white/10 hover:border-white/25 hover:text-white'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {(services.length > 0 ? services : defaultServices).map((service: any) => {
-            const IconComponent = service.icon || Heart;
-            return (
-              <div
-                key={service.slug}
-                className="group bg-white rounded-3xl p-6 border border-slate-200/90 shadow-subtle hover:shadow-elevated transition-all duration-300 flex flex-col justify-between hover:-translate-y-1"
-              >
-                <div>
-                  <div className="w-12 h-12 rounded-2xl bg-komfo-50 text-komfo-600 flex items-center justify-center mb-5 group-hover:bg-komfo-600 group-hover:text-white transition-colors duration-300 shadow-sm">
-                    <IconComponent className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-bold text-navy-900 group-hover:text-komfo-700 transition-colors">
-                    {service.title}
+        {/* 3-Column Sleek Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {filteredServices.map((serv) => (
+            <Link
+              key={serv.slug}
+              to={`/services/${serv.slug}`}
+              className="group relative rounded-3xl overflow-hidden glass-card flex flex-col justify-between transition-all duration-500 hover:-translate-y-1.5"
+            >
+              {/* Media Image Container */}
+              <div className="relative h-64 sm:h-72 w-full overflow-hidden">
+                <img
+                  src={serv.imageUrl}
+                  alt={serv.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0f0514] via-[#0f0514]/40 to-transparent" />
+
+                {/* Top Corner Badge & Index */}
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                  <span className="text-[11px] font-mono uppercase tracking-wider px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-amber-300 font-bold">
+                    {serv.category}
+                  </span>
+                  <span className="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/15 flex items-center justify-center text-xs font-mono font-bold text-slate-300 group-hover:border-komfo-400 group-hover:text-komfo-300 transition-colors">
+                    {serv.index}
+                  </span>
+                </div>
+              </div>
+
+              {/* Card Meta Content */}
+              <div className="p-6 space-y-4 flex-1 flex flex-col justify-between -mt-6 relative z-10">
+                <div className="space-y-2">
+                  <h3 className="text-xl font-bold font-display text-white group-hover:text-komfo-300 transition-colors flex items-center justify-between">
+                    <span>{serv.title}</span>
+                    <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-komfo-300 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
                   </h3>
-                  <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                    {service.shortDescription}
+                  <p className="text-xs text-slate-300/80 leading-relaxed font-sans line-clamp-2">
+                    {serv.shortDescription}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                  <Link
-                    to={`/services/${service.slug}`}
-                    className="text-xs font-bold text-komfo-600 group-hover:text-komfo-700 inline-flex items-center gap-1 hover:underline"
-                  >
-                    <span>Learn More</span>
-                    <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
-                  </Link>
-
-                  <Link
-                    to={`/book-care?service=${service.slug}`}
-                    className="text-[11px] font-semibold text-slate-500 hover:text-navy-900 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 transition-colors"
-                  >
-                    Book
-                  </Link>
+                <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono">
+                  <span className="text-slate-400">From {formatCurrency(serv.price)}</span>
+                  <span className="text-amber-400/90 font-bold uppercase tracking-wider">
+                    {serv.duration}
+                  </span>
                 </div>
               </div>
-            );
-          })}
+            </Link>
+          ))}
         </div>
 
-        <div className="mt-12 text-center">
+        {/* View All Services Footer Link */}
+        <div className="text-center pt-6">
           <Link
             to="/services"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-navy-900 font-semibold text-xs transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white font-mono text-xs uppercase tracking-widest hover:border-komfo-400 transition-all"
           >
-            <span>View All Clinical Services & Pricing</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>View All 8 Clinical Care Disciplines</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
 
-      {/* 3. WHY CHOOSE KOMFOCARE */}
-      <section className="bg-navy-950 text-white py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-komfo-400">
-              Why KomfoCare
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold font-display tracking-tight text-white">
-              Healthcare That Comes Home With You
-            </h2>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Designed around dignity, professional clinical competence, and seamless family coordination.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'Convenient',
-                desc: 'Receive appropriate clinical care without unnecessary trips to a facility, reducing hospital commute stress.',
-                icon: Clock,
-              },
-              {
-                title: 'Professional',
-                desc: 'Care delivered by appropriately qualified, background-verified registered healthcare professionals.',
-                icon: Award,
-              },
-              {
-                title: 'Personalized',
-                desc: 'Care structured around individual patient health requirements and physician directives.',
-                icon: Heart,
-              },
-              {
-                title: 'Compassionate',
-                desc: 'Treating every patient and senior loved one with unwavering dignity, kindness, and respect.',
-                icon: Users,
-              },
-              {
-                title: 'Family Connected',
-                desc: 'Keep authorized family members informed with transparent visit summaries and clinical notes.',
-                icon: MessageCircle,
-              },
-              {
-                title: 'Reliable',
-                desc: 'Professional coordination from initial booking request through continuous clinical follow-up.',
-                icon: ShieldCheck,
-              },
-            ].map((benefit) => {
-              const Icon = benefit.icon;
-              return (
-                <div
-                  key={benefit.title}
-                  className="bg-navy-900/80 border border-navy-800 p-8 rounded-3xl hover:border-komfo-500/50 transition-all duration-300 group"
-                >
-                  <div className="w-12 h-12 rounded-2xl bg-navy-800 text-komfo-400 flex items-center justify-center mb-5 group-hover:bg-komfo-600 group-hover:text-white transition-colors duration-300">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-bold text-white mb-2">{benefit.title}</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">{benefit.desc}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. HOW IT WORKS (4-Step Timeline) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-komfo-600">
-            Simple Process
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-navy-900 tracking-tight">
-            How KomfoCare Works
+      {/* ========================================================
+          WHY CHOOSE KOMFOCARE — Sleek Dark Bento Cards
+      ======================================================== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="space-y-2">
+          <div className="text-label">WHY KOMFOCARE / CLINICAL ADVANTAGE</div>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-display-massive text-white tracking-tight">
+            Designed for Dignity, Clinical Safety & Peace of Mind.
           </h2>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            Booking professional home healthcare is frictionless, transparent, and clinically structured.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              step: '01',
-              title: 'Request Care',
-              desc: 'Select your required service, describe patient needs, and choose your preferred date and time slot.',
-            },
-            {
-              step: '02',
-              title: 'Clinical Assessment',
-              desc: 'Our nursing coordinator reviews your request and determines the appropriate clinician and care parameters.',
-            },
-            {
-              step: '03',
-              title: 'Care at Home',
-              desc: 'An appropriately qualified registered nurse or therapist arrives at your home to deliver agreed services.',
-            },
-            {
-              step: '04',
-              title: 'Continued Support',
-              desc: 'KomfoCare coordinates follow-up, uploads digital visit records, and supports ongoing recovery routines.',
-            },
-          ].map((item) => (
-            <div
-              key={item.step}
-              className="bg-white rounded-3xl p-7 border border-slate-200 shadow-subtle hover:shadow-elevated transition-all flex flex-col justify-between"
-            >
-              <div>
-                <span className="text-3xl font-extrabold font-display text-komfo-600/30">
-                  {item.step}
-                </span>
-                <h3 className="text-lg font-bold text-navy-900 mt-2 mb-2">{item.title}</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
-              </div>
+          <div className="p-8 rounded-3xl glass-card space-y-4 group">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-amber-400/90 px-2.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 font-bold">
+                01/VERIFIED
+              </span>
+              <ShieldCheck className="w-5 h-5 text-komfo-400 group-hover:scale-110 transition-transform" />
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 5. TRUST & SAFETY SECTION */}
-      <section className="bg-gradient-to-br from-slate-100 to-komfo-50/50 py-16 rounded-3xl max-w-7xl mx-auto px-6 sm:px-12 border border-slate-200">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <div className="space-y-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-komfo-700">
-              Commitment to Safety
-            </span>
-            <h2 className="text-3xl font-extrabold font-display text-navy-900 tracking-tight">
-              Care You Can Feel Confident About
-            </h2>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              Every home visit adheres to strict clinical hygiene protocols, patient privacy standards, and empathetic communication.
+            <h3 className="text-lg font-bold font-display text-white">Licensed Clinicians Only</h3>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Every nurse and clinician is rigorously vetted with Nursing Council of Kenya credentials, background checks, and clinical competency reviews.
             </p>
-
-            <div className="space-y-3 pt-2 text-xs text-slate-700">
-              <div className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900">Verified Healthcare Professionals:</strong> Every clinician is verified through credential vetting, background checks, and active council licensing.
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Lock className="w-5 h-5 text-komfo-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900">Privacy-Focused Healthcare:</strong> Medical information and visit logs are strictly confidential and only accessible to authorized family members.
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900">Physician-Aligned Care:</strong> We coordinate with your primary treating doctor to ensure home recovery routines follow prescribed treatment protocols.
-                </div>
-              </div>
-            </div>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl shadow-elevated border border-slate-200 space-y-5">
-            <h3 className="font-bold text-navy-900 text-lg">Need Assistance Selecting Care?</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Speak directly with our clinical care supervisor to discuss elderly companionship, wound dressing, or post-operative recovery for your family.
-            </p>
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-              <Phone className="w-5 h-5 text-komfo-600 flex-shrink-0" />
-              <div>
-                <p className="text-[11px] text-slate-500">Care Helpline</p>
-                <a href="tel:+254700000000" className="text-sm font-bold text-navy-900 hover:text-komfo-600">
-                  +254 700 000 000
-                </a>
-              </div>
+          <div className="p-8 rounded-3xl glass-card space-y-4 group">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-amber-400/90 px-2.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 font-bold">
+                02/PROTOCOLS
+              </span>
+              <Activity className="w-5 h-5 text-komfo-400 group-hover:scale-110 transition-transform" />
             </div>
-            <Link
-              to="/request-service"
-              className="w-full text-center inline-block py-3 rounded-xl bg-navy-900 hover:bg-navy-950 text-white font-semibold text-xs shadow-md transition-all"
-            >
-              Request Free Care Inquiry
-            </Link>
+            <h3 className="text-lg font-bold font-display text-white">Hospital-Grade Sterile Care</h3>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Standardized asepsis procedures, high-grade dressing kits, and protocol-driven care for post-operative recovery and chronic wound management.
+            </p>
+          </div>
+
+          <div className="p-8 rounded-3xl glass-card space-y-4 group">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-amber-400/90 px-2.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 font-bold">
+                03/TRANSPARENCY
+              </span>
+              <Users className="w-5 h-5 text-komfo-400 group-hover:scale-110 transition-transform" />
+            </div>
+            <h3 className="text-lg font-bold font-display text-white">Family Care Coordination</h3>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Real-time digital visit notes, vital signs trend charting, and synchronized notifications keep authorized family members fully informed.
+            </p>
+          </div>
+
+          <div className="p-8 rounded-3xl glass-card space-y-4 group">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-amber-400/90 px-2.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 font-bold">
+                04/RAPID DISPATCH
+              </span>
+              <Clock className="w-5 h-5 text-komfo-400 group-hover:scale-110 transition-transform" />
+            </div>
+            <h3 className="text-lg font-bold font-display text-white">Rapid Nairobi Coverage</h3>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Strategic clinician placement across Westlands, Karen, Kilimani, Lavington, Runda, and surrounding metro hubs for punctual home visits.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* 6. HEALTHCARE PROFESSIONALS SHOWCASE */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-komfo-600">
-              Our Clinical Team
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-navy-900 tracking-tight mt-1">
-              Verified Healthcare Professionals
+      {/* ========================================================
+          HEALTHCARE PROFESSIONALS SHOWCASE — Sleek Clinician Cards
+      ======================================================== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+          <div className="space-y-2">
+            <div className="text-label">VERIFIED ROSTER / PRACTITIONERS</div>
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-display-massive text-white tracking-tight">
+              Meet Our Senior Home Care Leads.
             </h2>
           </div>
+
           <Link
             to="/professionals"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-komfo-600 hover:text-komfo-700 hover:underline"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white font-mono text-xs uppercase tracking-wider hover:border-komfo-400 transition-all"
           >
-            <span>View All Clinicians</span>
+            <span>View Full Directory</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {(professionals.length > 0 ? professionals : defaultProfessionals).map((prof: any) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          {defaultProfessionals.map((prof) => (
             <div
               key={prof.fullName}
-              className="bg-white rounded-3xl p-5 border border-slate-200 shadow-subtle hover:shadow-elevated transition-all flex flex-col justify-between group"
+              className="group rounded-3xl overflow-hidden glass-card border border-white/15 hover:border-komfo-400/60 p-6 space-y-5 transition-all duration-500 flex flex-col justify-between"
             >
-              <div>
-                <div className="relative rounded-2xl overflow-hidden aspect-square mb-4 bg-slate-100">
+              <div className="flex items-center gap-4">
+                <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-white/15 flex-shrink-0">
                   <img
                     src={prof.photoUrl}
                     alt={prof.fullName}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <span className="absolute bottom-2 right-2 px-2.5 py-1 rounded-full bg-navy-950/80 backdrop-blur-sm text-white text-[10px] font-semibold flex items-center gap-1">
-                    <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-                    <span>5.0</span>
-                  </span>
                 </div>
-
-                <h3 className="font-bold text-navy-900 text-base">{prof.fullName}</h3>
-                <p className="text-xs font-semibold text-komfo-600 mt-0.5">{prof.roleTitle}</p>
-                <p className="text-[11px] text-slate-500 mt-2 line-clamp-2">{prof.areasOfPractice}</p>
+                <div>
+                  <h4 className="font-bold font-display text-white text-base group-hover:text-komfo-300 transition-colors">
+                    {prof.fullName}
+                  </h4>
+                  <p className="text-xs text-amber-400 font-mono">{prof.roleTitle}</p>
+                  <div className="flex items-center gap-1 text-xs text-slate-400 mt-1">
+                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                    <span className="font-bold text-white">{prof.rating}</span>
+                    <span className="text-[10px] font-mono">({prof.totalVisits} completed visits)</span>
+                  </div>
+                </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span className="text-slate-500 font-medium">{prof.experienceYears}+ years exp</span>
-                <Link
-                  to={`/book-care`}
-                  className="font-bold text-navy-900 hover:text-komfo-600"
-                >
-                  Book Visit
-                </Link>
+              <div className="space-y-2 text-xs">
+                <div className="p-3 rounded-xl bg-white/5 border border-white/5 text-slate-300 font-mono text-[11px]">
+                  {prof.qualifications}
+                </div>
+                <p className="text-slate-400 text-[11px]">
+                  <strong className="text-slate-300 font-semibold">Specialties:</strong> {prof.areasOfPractice}
+                </p>
               </div>
+
+              <Link
+                to="/book-care"
+                className="w-full py-2.5 rounded-full bg-white/5 hover:bg-komfo-600 border border-white/10 hover:border-komfo-400 text-white font-bold text-xs uppercase tracking-wider text-center transition-all duration-300 block"
+              >
+                Request Clinician
+              </Link>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 7. TESTIMONIALS CAROUSEL / GRID */}
-      <section className="bg-slate-100/80 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-komfo-600">
-              Client Stories
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-navy-900 tracking-tight">
-              Trusted by Families Across the Region
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {(testimonials.length > 0 ? testimonials : defaultTestimonials).map((t: any) => (
-              <div
-                key={t.name}
-                className="bg-white rounded-3xl p-7 border border-slate-200 shadow-subtle flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center gap-1 text-amber-400 mb-4">
-                    {[...Array(t.rating || 5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-400" />
-                    ))}
-                  </div>
-                  <p className="text-xs text-slate-700 leading-relaxed italic">
-                    "{t.content}"
-                  </p>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-slate-100">
-                  <h4 className="font-bold text-navy-900 text-sm">{t.name}</h4>
-                  <p className="text-[11px] text-komfo-600 font-medium">{t.roleOrRelationship}</p>
-                  <p className="text-[10px] text-slate-400 mt-0.5">{t.location}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* ========================================================
+          HOW IT WORKS — 4-Step Interactive Timeline
+      ======================================================== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="space-y-2 text-center max-w-2xl mx-auto">
+          <div className="text-label justify-center">SEAMLESS PROCESS</div>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-display-massive text-white tracking-tight">
+            How KomfoCare Delivers.
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-300 font-sans">
+            Simple, safe, and transparent from initial intake to personalized ongoing bedside care.
+          </p>
         </div>
-      </section>
 
-      {/* 8. SERVICE AREAS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-navy-900 text-white rounded-3xl p-8 sm:p-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-komfo-400">
-                Coverage & Availability
-              </span>
-              <h2 className="text-3xl font-extrabold font-display tracking-tight text-white mt-1 mb-4">
-                Service Areas Across Nairobi & Surrounding Regions
-              </h2>
-              <p className="text-xs text-slate-300 leading-relaxed mb-6">
-                KomfoCare visiting healthcare professionals operate across primary metropolitan corridors with rapid dispatch capabilities.
-              </p>
-
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                {[
-                  'Westlands & Kilimani',
-                  'Karen & Langata',
-                  'Lavington & Riverside',
-                  'Runda, Muthaiga & Gigiri',
-                  'Kileleshwa & Parklands',
-                  'Kiambu Road & Environs',
-                ].map((area) => (
-                  <div key={area} className="flex items-center gap-2 text-slate-200">
-                    <MapPin className="w-3.5 h-3.5 text-komfo-400 flex-shrink-0" />
-                    <span>{area}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-navy-950/80 p-6 rounded-2xl border border-navy-800 text-center space-y-4">
-              <h3 className="font-bold text-white text-base">Check Your Location Coverage</h3>
-              <p className="text-xs text-slate-400">
-                Not sure if we cover your residence? Submit your location address for an instant coordination review.
-              </p>
-              <Link
-                to="/book-care"
-                className="inline-block px-6 py-2.5 rounded-full bg-komfo-600 hover:bg-komfo-500 text-white font-semibold text-xs shadow-md transition-all"
-              >
-                Schedule Home Visit
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 9. STRONG FINAL CALL TO ACTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="bg-gradient-to-r from-navy-900 via-navy-950 to-komfo-900 text-white rounded-3xl p-10 sm:p-16 text-center space-y-6 shadow-2xl relative overflow-hidden">
-          <div className="max-w-2xl mx-auto space-y-4">
-            <h2 className="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-white">
-              Your Home. Your Comfort. Your Care.
-            </h2>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-              Let KomfoCare help bring professional healthcare support closer to you and your loved ones.
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="p-6 rounded-3xl glass-card border border-white/10 space-y-3">
+            <span className="text-2xl font-extrabold font-mono text-komfo-400">01</span>
+            <h4 className="text-base font-bold font-display text-white">Select Service & Needs</h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Choose your required care discipline, provide patient health background, and preferred visit timing.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <div className="p-6 rounded-3xl glass-card border border-white/10 space-y-3">
+            <span className="text-2xl font-extrabold font-mono text-amber-400">02</span>
+            <h4 className="text-base font-bold font-display text-white">Clinical Triage & Match</h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Our clinical coordinator reviews the intake and assigns the optimal licensed nurse or practitioner.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-3xl glass-card border border-white/10 space-y-3">
+            <span className="text-2xl font-extrabold font-mono text-komfo-400">03</span>
+            <h4 className="text-base font-bold font-display text-white">In-Home Clinical Visit</h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Your assigned clinician arrives promptly with sterile clinical supplies to perform care and vital logs.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-3xl glass-card border border-white/10 space-y-3">
+            <span className="text-2xl font-extrabold font-mono text-emerald-400">04</span>
+            <h4 className="text-base font-bold font-display text-white">Digital Vitals & Follow-Up</h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Access digital clinical notes, monitor vital signs progress curves, and schedule ongoing care seamlessly.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          FINAL CTA CARD — Massive Glowing Editorial Call-to-Action
+      ======================================================== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative rounded-4xl overflow-hidden bg-gradient-to-br from-[#1b0a2a] via-[#100418] to-[#08000a] border border-white/15 p-8 sm:p-16 text-center space-y-8 shadow-2xl">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-komfo-600/25 rounded-full blur-[100px] pointer-events-none -z-10" />
+
+          <div className="space-y-3 max-w-3xl mx-auto">
+            <div className="text-label justify-center">SCHEDULE HOME HEALTHCARE</div>
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-display-massive text-white tracking-tight">
+              Ready for Compassionate Care at Home?
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Schedule a qualified registered nurse or clinician today. Instant booking confirmation with reference tracking code.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
               to="/book-care"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-white text-navy-900 hover:bg-slate-100 font-bold text-xs shadow-lg transition-all"
+              className="inline-flex items-center gap-2 px-9 py-4 rounded-full bg-gradient-to-r from-komfo-600 via-komfo-500 to-indigo-600 hover:from-komfo-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-widest shadow-glow hover:scale-105 transition-all"
             >
-              <Calendar className="w-4 h-4 text-komfo-600" />
-              <span>Book Home Care</span>
+              <span>Book a Home Visit Now</span>
+              <ArrowUpRight className="w-4 h-4" />
             </Link>
 
             <Link
               to="/contact"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-navy-800/80 hover:bg-navy-800 text-white font-semibold text-xs border border-navy-700 transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white font-semibold text-xs uppercase tracking-wider transition-all"
             >
-              <span>Contact Us</span>
+              <span>Contact Care Helpline</span>
             </Link>
           </div>
         </div>

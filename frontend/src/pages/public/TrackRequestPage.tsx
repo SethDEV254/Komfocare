@@ -60,20 +60,19 @@ export const TrackRequestPage: React.FC = () => {
             userId: 'u1',
             title: 'Nurse',
             fullName: 'Nurse Sarah Ombati, RN',
-            roleTitle: 'Senior Home Care Lead & Registered Nurse',
-            qualifications: 'BSc Nursing, BLS Certified',
+            roleTitle: 'Senior Home Care Lead',
+            qualifications: 'BSc Nursing, BLS',
             areasOfPractice: 'Home Nursing',
             experienceYears: 9,
             rating: 4.98,
             totalVisits: 142,
             isPublic: true,
             isAvailable: true,
-            photoUrl: 'https://images.unsplash.com/photo-1594824813689-d758c5c7d0d0?auto=format&fit=crop&q=80&w=300',
           },
           createdAt: new Date().toISOString(),
         });
       } else {
-        setErrorMsg(err.message || 'No request found for this reference number.');
+        setErrorMsg('Reference number not found. Check code e.g. KC-2026-8812');
         setRequestData(null);
       }
     } finally {
@@ -82,10 +81,9 @@ export const TrackRequestPage: React.FC = () => {
   };
 
   useEffect(() => {
-    const code = searchParams.get('ref');
-    if (code) {
-      setRefInput(code);
-      fetchRequest(code);
+    const ref = searchParams.get('ref');
+    if (ref) {
+      fetchRequest(ref);
     }
   }, [searchParams]);
 
@@ -93,54 +91,69 @@ export const TrackRequestPage: React.FC = () => {
     e.preventDefault();
     if (refInput.trim()) {
       setSearchParams({ ref: refInput.trim() });
-      fetchRequest(refInput);
+      fetchRequest(refInput.trim());
     }
   };
 
   return (
-    <div className="py-12 sm:py-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-      <div className="text-center max-w-2xl mx-auto space-y-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-komfo-600">
-          Live Tracking
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold font-display text-navy-900 tracking-tight">
-          Track Care Request Status
+    <div className="py-12 sm:py-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      {/* Header */}
+      <div className="space-y-4 max-w-3xl">
+        <div className="text-label">INTAKE TRACKER / STATUS</div>
+        <h1 className="text-4xl sm:text-6xl font-extrabold text-display-massive text-white tracking-tight">
+          Track Care Request.
         </h1>
-        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Enter your request reference code (e.g. <strong>KC-2026-8841</strong>) to view the live clinical triage and visit progress.
+        <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
+          Enter your 12-digit tracking reference code to check clinical review, clinician assignment, and visit scheduling in real time.
         </p>
+      </div>
 
-        {/* Lookup Box */}
-        <form onSubmit={handleSearch} className="max-w-md mx-auto pt-4 flex gap-2">
+      {/* Search Input Bar */}
+      <div className="p-6 sm:p-8 rounded-3xl glass-card border border-white/15 shadow-2xl">
+        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-slate-400 absolute left-4 top-3.5" />
+            <Search className="w-5 h-5 text-slate-400 absolute left-4 top-3.5" />
             <input
               type="text"
               required
-              placeholder="e.g. KC-2026-8841"
+              placeholder="e.g. KC-2026-8812"
               value={refInput}
-              onChange={(e) => setRefInput(e.target.value.toUpperCase())}
-              className="w-full pl-11 pr-4 py-3 rounded-2xl border border-slate-300 text-xs font-mono font-bold focus:ring-2 focus:ring-komfo-500 uppercase shadow-sm"
+              onChange={(e) => setRefInput(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 rounded-full bg-white/5 border border-white/15 text-white font-mono text-sm uppercase placeholder-slate-500 focus:outline-none focus:border-komfo-400"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-3 rounded-2xl bg-navy-900 hover:bg-navy-950 text-white font-semibold text-xs shadow-md transition-all disabled:opacity-50"
+            className="px-8 py-3 rounded-full bg-gradient-to-r from-komfo-600 via-komfo-500 to-indigo-600 hover:from-komfo-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-widest shadow-glow hover:scale-105 transition-all disabled:opacity-50"
           >
-            {loading ? 'Searching...' : 'Track'}
+            {loading ? 'Searching...' : 'Track Status'}
           </button>
         </form>
+
+        <div className="flex items-center gap-2 mt-4 text-[11px] font-mono text-slate-400">
+          <span>Try demo code:</span>
+          <button
+            type="button"
+            onClick={() => {
+              setRefInput('KC-2026-8812');
+              fetchRequest('KC-2026-8812');
+            }}
+            className="text-amber-400 hover:underline font-bold"
+          >
+            KC-2026-8812
+          </button>
+        </div>
       </div>
 
       {errorMsg && (
-        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-3 max-w-md mx-auto">
-          <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0" />
+        <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 text-rose-400 flex-shrink-0" />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      {/* Tracker Component Result */}
+      {/* Tracker Timeline & Details */}
       {requestData && <BookingStatusTracker request={requestData} />}
     </div>
   );

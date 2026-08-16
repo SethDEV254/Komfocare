@@ -16,6 +16,8 @@ import {
   Activity,
   Pill,
   BookOpen,
+  ArrowUpRight,
+  Sparkles,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -29,13 +31,12 @@ export const Header: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 15);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
     setServicesDropdownOpen(false);
@@ -49,47 +50,47 @@ export const Header: React.FC = () => {
   };
 
   const servicesList = [
-    { title: 'Home Nursing Care', slug: 'home-nursing-care', icon: Heart },
-    { title: 'Elderly Care', slug: 'elderly-care', icon: Users },
-    { title: 'Post-Surgery Care', slug: 'post-surgery-care', icon: Activity },
-    { title: 'Medication Management', slug: 'medication-management', icon: Pill },
-    { title: 'Palliative Care', slug: 'palliative-care', icon: ShieldCheck },
-    { title: 'Patient Escort', slug: 'patient-escort', icon: Calendar },
-    { title: 'Vital Signs Monitoring', slug: 'vital-signs-monitoring', icon: Stethoscope },
-    { title: 'Health Education', slug: 'health-education', icon: BookOpen },
+    { title: 'Home Nursing Care', slug: 'home-nursing-care', icon: Heart, category: 'Clinical' },
+    { title: 'Elderly Care', slug: 'elderly-care', icon: Users, category: 'Support' },
+    { title: 'Post-Surgery Care', slug: 'post-surgery-care', icon: Activity, category: 'Recovery' },
+    { title: 'Medication Management', slug: 'medication-management', icon: Pill, category: 'Clinical' },
+    { title: 'Palliative Care', slug: 'palliative-care', icon: ShieldCheck, category: 'Holistic' },
+    { title: 'Patient Escort', slug: 'patient-escort', icon: Calendar, category: 'Transport' },
+    { title: 'Vital Signs Monitoring', slug: 'vital-signs-monitoring', icon: Stethoscope, category: 'Diagnostic' },
+    { title: 'Health Education', slug: 'health-education', icon: BookOpen, category: 'Family' },
   ];
 
   return (
-    <header
-      className={`sticky top-0 z-40 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200/80 py-3'
-          : 'bg-white/80 backdrop-blur-sm py-4 border-b border-slate-100'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-navy-900 to-komfo-600 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-              <Heart className="w-5 h-5 fill-white/20" />
+    <header className="sticky top-0 z-50 px-3 sm:px-6 pt-3 pb-2 transition-all duration-300 pointer-events-none">
+      <div className="max-w-7xl mx-auto pointer-events-auto">
+        <div
+          className={`flex items-center justify-between px-4 sm:px-6 py-3 rounded-full transition-all duration-300 border ${
+            isScrolled
+              ? 'bg-[#0f0514]/90 backdrop-blur-2xl border-white/15 shadow-2xl shadow-purple-950/40'
+              : 'bg-[#0f0514]/75 backdrop-blur-xl border-white/10 shadow-lg'
+          }`}
+        >
+          {/* Brand Logo */}
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-komfo-600 to-amber-500 flex items-center justify-center text-white shadow-glow group-hover:scale-105 transition-transform">
+              <Heart className="w-4.5 h-4.5 fill-white/20 text-white" />
             </div>
             <div>
-              <span className="text-xl font-bold font-display tracking-tight text-navy-900">
-                Komfo<span className="text-komfo-600">Care</span>
+              <span className="text-lg font-bold font-display tracking-tight text-white flex items-center gap-0.5">
+                Komfo<span className="text-komfo-400">Care</span>
               </span>
-              <span className="hidden sm:block text-[10px] uppercase tracking-wider text-slate-500 font-medium">
-                Home Healthcare
+              <span className="hidden lg:block text-[9px] uppercase tracking-[0.2em] text-amber-400/90 font-bold -mt-0.5">
+                Home Health
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-7">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-slate-300">
             <Link
               to="/"
-              className={`text-sm font-semibold transition-colors hover:text-komfo-600 ${
-                location.pathname === '/' ? 'text-komfo-600' : 'text-slate-700'
+              className={`link-underline transition-colors hover:text-white ${
+                location.pathname === '/' ? 'text-white font-bold' : ''
               }`}
             >
               Home
@@ -97,8 +98,8 @@ export const Header: React.FC = () => {
 
             <Link
               to="/about"
-              className={`text-sm font-semibold transition-colors hover:text-komfo-600 ${
-                location.pathname === '/about' ? 'text-komfo-600' : 'text-slate-700'
+              className={`link-underline transition-colors hover:text-white ${
+                location.pathname === '/about' ? 'text-white font-bold' : ''
               }`}
             >
               About
@@ -110,95 +111,96 @@ export const Header: React.FC = () => {
               onMouseEnter={() => setServicesDropdownOpen(true)}
               onMouseLeave={() => setServicesDropdownOpen(false)}
             >
-              <Link
-                to="/services"
-                className={`flex items-center gap-1 text-sm font-semibold transition-colors hover:text-komfo-600 ${
-                  location.pathname.startsWith('/services') ? 'text-komfo-600' : 'text-slate-700'
+              <button
+                type="button"
+                className={`link-underline inline-flex items-center gap-1 transition-colors hover:text-white ${
+                  location.pathname.startsWith('/services') ? 'text-white font-bold' : ''
                 }`}
               >
-                Services
-                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${servicesDropdownOpen ? 'rotate-180' : ''}`} />
-              </Link>
+                <span>Services</span>
+                <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+              </button>
 
               {servicesDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-2xl shadow-elevated border border-slate-100 p-2 grid grid-cols-1 gap-1 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  <div className="px-3 py-1.5 border-b border-slate-100 mb-1 flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Clinical Home Services</span>
-                    <Link to="/services" className="text-xs font-semibold text-komfo-600 hover:underline">View All</Link>
-                  </div>
-                  {servicesList.map((service) => {
-                    const Icon = service.icon;
-                    return (
+                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-80 z-50">
+                  <div className="p-3 rounded-2xl bg-[#0f0514]/95 backdrop-blur-2xl border border-white/15 shadow-2xl space-y-1">
+                    <div className="px-3 py-1.5 border-b border-white/10 flex items-center justify-between">
+                      <span className="text-[10px] uppercase font-bold tracking-widest text-amber-400">
+                        8 Specialized Disciplines
+                      </span>
                       <Link
-                        key={service.slug}
-                        to={`/services/${service.slug}`}
-                        className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:bg-komfo-50 hover:text-komfo-700 transition-colors"
+                        to="/services"
+                        className="text-[10px] text-komfo-400 hover:text-komfo-300 font-semibold"
                       >
-                        <div className="w-7 h-7 rounded-lg bg-komfo-100/70 text-komfo-600 flex items-center justify-center flex-shrink-0">
-                          <Icon className="w-4 h-4" />
-                        </div>
-                        <span>{service.title}</span>
+                        View All
                       </Link>
-                    );
-                  })}
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-1 max-h-72 overflow-y-auto py-1">
+                      {servicesList.map((s) => (
+                        <Link
+                          key={s.slug}
+                          to={`/services/${s.slug}`}
+                          className="flex items-center justify-between p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all group"
+                        >
+                          <span className="text-xs font-medium">{s.title}</span>
+                          <span className="text-[9px] uppercase px-2 py-0.5 rounded-full bg-white/5 text-amber-400/80 font-mono">
+                            {s.category}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
 
             <Link
               to="/professionals"
-              className={`text-sm font-semibold transition-colors hover:text-komfo-600 ${
-                location.pathname === '/professionals' ? 'text-komfo-600' : 'text-slate-700'
+              className={`link-underline transition-colors hover:text-white ${
+                location.pathname === '/professionals' ? 'text-white font-bold' : ''
               }`}
             >
-              Professionals
+              Clinicians
             </Link>
 
             <Link
               to="/resources"
-              className={`text-sm font-semibold transition-colors hover:text-komfo-600 ${
-                location.pathname.startsWith('/resources') ? 'text-komfo-600' : 'text-slate-700'
+              className={`link-underline transition-colors hover:text-white ${
+                location.pathname === '/resources' ? 'text-white font-bold' : ''
               }`}
             >
               Resources
             </Link>
 
             <Link
-              to="/contact"
-              className={`text-sm font-semibold transition-colors hover:text-komfo-600 ${
-                location.pathname === '/contact' ? 'text-komfo-600' : 'text-slate-700'
+              to="/track-request"
+              className={`link-underline transition-colors hover:text-white ${
+                location.pathname === '/track-request' ? 'text-white font-bold' : ''
               }`}
             >
-              Contact
+              Track Care
             </Link>
           </nav>
 
-          {/* Right Action CTAs */}
-          <div className="hidden lg:flex items-center gap-4">
-            <a
-              href="tel:+254700000000"
-              className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-navy-900 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-slate-100"
-            >
-              <Phone className="w-3.5 h-3.5 text-komfo-600" />
-              <span>Call Us</span>
-            </a>
-
+          {/* Right Action CTA Buttons */}
+          <div className="hidden sm:flex items-center gap-3">
             {isAuthenticated ? (
               <div className="flex items-center gap-2">
                 <Link
                   to={getDashboardRoute()}
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-navy-900 font-semibold text-xs transition-colors"
+                  className="px-4 py-1.5 rounded-full bg-white/10 border border-white/15 hover:bg-white/20 text-white font-semibold text-xs transition-all inline-flex items-center gap-1.5"
                 >
-                  <LayoutDashboard className="w-4 h-4 text-komfo-600" />
-                  <span>Dashboard ({user?.role?.replace('_', ' ')})</span>
+                  <LayoutDashboard className="w-3.5 h-3.5 text-komfo-400" />
+                  <span>Portal</span>
                 </Link>
                 <button
                   onClick={() => {
                     logout();
-                    navigate('/');
+                    navigate('/login');
                   }}
-                  title="Sign out"
-                  className="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-colors"
+                  className="p-1.5 rounded-full text-slate-400 hover:text-rose-400 hover:bg-white/5 transition-colors"
+                  title="Sign Out"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
@@ -206,7 +208,7 @@ export const Header: React.FC = () => {
             ) : (
               <Link
                 to="/login"
-                className="text-xs font-semibold text-navy-900 hover:text-komfo-600 transition-colors px-3 py-2"
+                className="px-3.5 py-1.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
               >
                 Sign In
               </Link>
@@ -214,145 +216,105 @@ export const Header: React.FC = () => {
 
             <Link
               to="/book-care"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-navy-900 to-komfo-700 hover:from-navy-950 hover:to-komfo-800 text-white font-semibold text-xs tracking-wide shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-gradient-to-r from-komfo-600 via-komfo-500 to-indigo-600 hover:from-komfo-500 hover:to-indigo-500 text-white font-bold text-xs shadow-glow hover:scale-105 transition-all tracking-wider uppercase"
             >
-              <Calendar className="w-4 h-4" />
-              <span>Book Home Care</span>
+              <span>Book Care</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          {/* Mobile Actions & Hamburger */}
-          <div className="flex items-center gap-2 lg:hidden">
+          {/* Mobile Toggle Button */}
+          <div className="flex items-center gap-2 md:hidden">
             <Link
               to="/book-care"
-              className="px-3.5 py-1.5 rounded-full bg-komfo-600 text-white font-semibold text-xs tracking-wide shadow-sm"
+              className="px-3 py-1.5 rounded-full bg-komfo-600 text-white font-bold text-[11px]"
             >
-              Book Care
+              Book
             </Link>
-
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle navigation menu"
-              className="p-2 text-slate-700 hover:text-navy-900 hover:bg-slate-100 rounded-xl transition-colors"
+              className="p-2 text-slate-300 hover:text-white rounded-full bg-white/5 border border-white/10"
+              aria-label="Toggle Navigation Menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Mobile Drawer Sheet */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[65px] bg-white border-b border-slate-200 shadow-2xl p-5 max-h-[85vh] overflow-y-auto animate-in slide-in-from-top-4 duration-200 z-50">
-          <div className="flex flex-col gap-3">
-            <Link
-              to="/"
-              className={`p-2.5 rounded-xl font-semibold text-sm ${
-                location.pathname === '/' ? 'bg-komfo-50 text-komfo-700' : 'text-slate-800 hover:bg-slate-50'
-              }`}
-            >
-              Home
-            </Link>
+        {/* Mobile Dropdown Menu Drawer */}
+        {mobileMenuOpen && (
+          <div className="mt-2 p-5 rounded-3xl bg-[#0f0514]/95 backdrop-blur-2xl border border-white/15 shadow-2xl space-y-4 md:hidden">
+            <nav className="flex flex-col space-y-2 text-sm font-semibold text-slate-200">
+              <Link
+                to="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-white/5 transition-colors"
+              >
+                Home
+              </Link>
+              <Link
+                to="/about"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-white/5 transition-colors"
+              >
+                About
+              </Link>
+              <Link
+                to="/services"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-white/5 transition-colors"
+              >
+                All Services (8 Disciplines)
+              </Link>
+              <Link
+                to="/professionals"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-white/5 transition-colors"
+              >
+                Healthcare Professionals
+              </Link>
+              <Link
+                to="/resources"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-white/5 transition-colors"
+              >
+                Health Resources
+              </Link>
+              <Link
+                to="/track-request"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-white/5 transition-colors"
+              >
+                Track Care Status
+              </Link>
+              <Link
+                to="/contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl hover:bg-white/5 transition-colors"
+              >
+                Contact & Helpline
+              </Link>
+            </nav>
 
-            <Link
-              to="/about"
-              className={`p-2.5 rounded-xl font-semibold text-sm ${
-                location.pathname === '/about' ? 'bg-komfo-50 text-komfo-700' : 'text-slate-800 hover:bg-slate-50'
-              }`}
-            >
-              About KomfoCare
-            </Link>
-
-            <div className="py-2 border-y border-slate-100">
-              <span className="block px-2.5 text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
-                Home Healthcare Services
-              </span>
-              <div className="grid grid-cols-1 gap-1 pl-2">
-                {servicesList.map((s) => (
-                  <Link
-                    key={s.slug}
-                    to={`/services/${s.slug}`}
-                    className="p-2 rounded-lg text-xs font-medium text-slate-700 hover:bg-komfo-50 hover:text-komfo-700 flex items-center gap-2"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-komfo-400" />
-                    {s.title}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <Link
-              to="/professionals"
-              className={`p-2.5 rounded-xl font-semibold text-sm ${
-                location.pathname === '/professionals' ? 'bg-komfo-50 text-komfo-700' : 'text-slate-800 hover:bg-slate-50'
-              }`}
-            >
-              Healthcare Professionals
-            </Link>
-
-            <Link
-              to="/resources"
-              className={`p-2.5 rounded-xl font-semibold text-sm ${
-                location.pathname.startsWith('/resources') ? 'bg-komfo-50 text-komfo-700' : 'text-slate-800 hover:bg-slate-50'
-              }`}
-            >
-              Health Resources & Blog
-            </Link>
-
-            <Link
-              to="/track-request"
-              className="p-2.5 rounded-xl font-semibold text-sm text-slate-800 hover:bg-slate-50"
-            >
-              Track Request Status
-            </Link>
-
-            <Link
-              to="/contact"
-              className={`p-2.5 rounded-xl font-semibold text-sm ${
-                location.pathname === '/contact' ? 'bg-komfo-50 text-komfo-700' : 'text-slate-800 hover:bg-slate-50'
-              }`}
-            >
-              Contact Us
-            </Link>
-
-            <div className="pt-3 border-t border-slate-100 flex flex-col gap-2.5">
-              {isAuthenticated ? (
-                <>
-                  <Link
-                    to={getDashboardRoute()}
-                    className="w-full text-center py-2.5 rounded-xl bg-slate-100 text-navy-900 font-semibold text-sm"
-                  >
-                    Go to Dashboard
-                  </Link>
-                  <button
-                    onClick={() => {
-                      logout();
-                      navigate('/');
-                    }}
-                    className="w-full text-center py-2 text-rose-600 font-semibold text-xs"
-                  >
-                    Sign Out
-                  </button>
-                </>
-              ) : (
-                <Link
-                  to="/login"
-                  className="w-full text-center py-2.5 rounded-xl border border-slate-300 text-slate-700 font-semibold text-sm"
-                >
-                  Sign In to Portal
-                </Link>
-              )}
-
+            <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
+              <Link
+                to="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full py-2.5 rounded-full bg-white/10 text-center font-bold text-xs text-white"
+              >
+                {isAuthenticated ? 'Go to Portal' : 'Sign In / Demo Login'}
+              </Link>
               <Link
                 to="/book-care"
-                className="w-full text-center py-3 rounded-xl bg-navy-900 text-white font-semibold text-sm shadow-md"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full py-3 rounded-full bg-gradient-to-r from-komfo-600 to-indigo-600 text-center font-bold text-xs text-white shadow-glow uppercase tracking-wider"
               >
-                Book Home Care Now
+                Book Home Care Visit
               </Link>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </header>
   );
 };

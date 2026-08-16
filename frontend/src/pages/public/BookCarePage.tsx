@@ -1,20 +1,17 @@
 import React from 'react';
 import { BookingWizard } from '../../components/booking/BookingWizard';
-import { ShieldCheck, Heart, Clock, Phone } from 'lucide-react';
 
 export const BookCarePage: React.FC = () => {
   return (
-    <div className="py-10 sm:py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <div className="py-12 sm:py-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       {/* Top Banner */}
-      <div className="text-center max-w-2xl mx-auto space-y-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-komfo-600">
-          Seamless Online Booking
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold font-display text-navy-900 tracking-tight">
-          Book Professional Home Care
+      <div className="space-y-4 max-w-3xl">
+        <div className="text-label">CARE INTAKE / SCHEDULING</div>
+        <h1 className="text-4xl sm:text-6xl font-extrabold text-display-massive text-white tracking-tight">
+          Book Professional Home Care.
         </h1>
-        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Complete this simple 8-step form to schedule a verified clinician or registered nurse for your loved one.
+        <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
+          Complete this structured clinical intake to schedule a verified, licensed registered nurse or clinician for your loved one in Nairobi.
         </p>
       </div>
 
