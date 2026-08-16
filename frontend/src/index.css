@@ -57,7 +57,8 @@
   }
 
   .glass-card {
-    @apply bg-[#0f0514]/80 backdrop-blur-xl border border-white/10 hover:border-komfo-500/40 shadow-card-dark transition-all duration-500;
+    @apply bg-[#0f0514]/80 backdrop-blur-xl border border-white/10 hover:border-komfo-500/40 shadow-2xl transition-all duration-500;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
   }
 
   .glass-surface {
