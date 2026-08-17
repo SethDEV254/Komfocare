@@ -3,6 +3,8 @@
 > "We come to you, so you can stay where you feel safe."
 > **Professional care. Personal touch. Peace of mind.**
 
+🔗 **Live Site**: [https://frontend-eight-sand-81.vercel.app](https://frontend-eight-sand-81.vercel.app)
+
 KOMFOCARE HOME-BASED SERVICES connects licensed registered nurses, geriatric specialists, and clinical practitioners with families in Nairobi, Kenya, delivering personalized, hospital-grade home healthcare.
 
 ---
@@ -15,7 +17,7 @@ KOMFOCARE HOME-BASED SERVICES connects licensed registered nurses, geriatric spe
 - **Primary Booking Email**: `komfocare@gmail.com`
 - **Founder Email**: `obieroshanice@gmail.com`
 - **Location**: Nairobi, Kenya
-- **Website**: `www.komfocare.com`
+- **Website**: [https://frontend-eight-sand-81.vercel.app](https://frontend-eight-sand-81.vercel.app)
 - **Socials**: Facebook (`KomfoCare`), Instagram (`@KomfoCare`), Twitter/X (`@KomfoCare`)
 - **Tagline**: *"Compassionate care. Right at home."*
 - **Core Promise**: *"We bring quality care to you, so you can focus on what matters most."*
