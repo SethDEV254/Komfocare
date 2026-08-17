@@ -11,6 +11,6 @@ export const config = {
     expiresIn: process.env.JWT_EXPIRES_IN || '1d',
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
   },
-  emergencyHotline: process.env.EMERGENCY_HOTLINE || '+254 700 000 000',
-  supportEmail: process.env.SUPPORT_EMAIL || 'care@komfocare.com',
+  emergencyHotline: process.env.EMERGENCY_HOTLINE || '0792004232',
+  supportEmail: process.env.SUPPORT_EMAIL || 'komfocare@gmail.com',
 };

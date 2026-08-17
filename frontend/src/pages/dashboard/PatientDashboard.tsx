@@ -161,25 +161,25 @@ export const PatientDashboard: React.FC = () => {
   return (
     <div className="space-y-8 max-w-6xl">
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-navy-900 to-komfo-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-md">
+      <div className="rounded-3xl p-6 sm:p-8 glass-surface border border-white/15 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-2xl">
         <div className="space-y-1">
-          <span className="text-xs font-semibold text-komfo-300 uppercase tracking-wider">
+          <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
             Patient Care Portal
           </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold font-display">
+          <h2 className="text-2xl sm:text-4xl font-extrabold font-display">
             Good morning, {p.fullName}
           </h2>
-          <p className="text-xs text-slate-300">
+          <p className="text-xs text-slate-300 font-sans">
             Welcome to your KomfoCare dashboard. Your personalized home healthcare overview.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 font-mono">
           <Link
             to="/book-care"
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-navy-900 font-bold text-xs shadow-md hover:bg-slate-100 transition-all flex-shrink-0"
+            className="inline-flex items-center gap-1.5 px-6 py-3 rounded-full bg-gradient-to-r from-komfo-600 via-komfo-500 to-indigo-600 hover:from-komfo-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-wider shadow-glow hover:scale-105 transition-all flex-shrink-0"
           >
-            <PlusCircle className="w-4 h-4 text-komfo-600" />
+            <PlusCircle className="w-4 h-4" />
             <span>Book Visit</span>
           </Link>
         </div>
@@ -189,51 +189,51 @@ export const PatientDashboard: React.FC = () => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <Link
           to="/book-care"
-          className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle hover:border-komfo-500 hover:shadow-elevated transition-all flex flex-col items-center text-center space-y-2 group"
+          className="p-5 rounded-2xl glass-card border border-white/10 hover:border-komfo-400/60 shadow-xl transition-all flex flex-col items-center text-center space-y-2 group hover:-translate-y-1"
         >
-          <div className="w-10 h-10 rounded-xl bg-komfo-50 text-komfo-600 flex items-center justify-center group-hover:bg-komfo-600 group-hover:text-white transition-colors">
+          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-komfo-400 flex items-center justify-center group-hover:bg-komfo-600 group-hover:text-white transition-colors shadow-sm">
             <Calendar className="w-5 h-5" />
           </div>
-          <span className="font-bold text-navy-900 text-xs">Book Home Care</span>
+          <span className="font-bold text-white text-xs font-display">Book Home Care</span>
         </Link>
 
         <Link
           to="/track-request"
-          className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle hover:border-komfo-500 hover:shadow-elevated transition-all flex flex-col items-center text-center space-y-2 group"
+          className="p-5 rounded-2xl glass-card border border-white/10 hover:border-komfo-400/60 shadow-xl transition-all flex flex-col items-center text-center space-y-2 group hover:-translate-y-1"
         >
-          <div className="w-10 h-10 rounded-xl bg-komfo-50 text-komfo-600 flex items-center justify-center group-hover:bg-komfo-600 group-hover:text-white transition-colors">
+          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-amber-400 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-white transition-colors shadow-sm">
             <Activity className="w-5 h-5" />
           </div>
-          <span className="font-bold text-navy-900 text-xs">Track Status</span>
+          <span className="font-bold text-white text-xs font-display">Track Status</span>
         </Link>
 
         <Link
           to="/contact"
-          className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle hover:border-komfo-500 hover:shadow-elevated transition-all flex flex-col items-center text-center space-y-2 group"
+          className="p-5 rounded-2xl glass-card border border-white/10 hover:border-komfo-400/60 shadow-xl transition-all flex flex-col items-center text-center space-y-2 group hover:-translate-y-1"
         >
-          <div className="w-10 h-10 rounded-xl bg-komfo-50 text-komfo-600 flex items-center justify-center group-hover:bg-komfo-600 group-hover:text-white transition-colors">
+          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-komfo-400 flex items-center justify-center group-hover:bg-komfo-600 group-hover:text-white transition-colors shadow-sm">
             <Phone className="w-5 h-5" />
           </div>
-          <span className="font-bold text-navy-900 text-xs">Care Helpline</span>
+          <span className="font-bold text-white text-xs font-display">Care Helpline</span>
         </Link>
 
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle flex flex-col items-center text-center space-y-2">
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+        <div className="p-5 rounded-2xl glass-card border border-white/10 shadow-xl flex flex-col items-center text-center space-y-2">
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-400/30 flex items-center justify-center">
             <ShieldCheck className="w-5 h-5" />
           </div>
-          <span className="font-bold text-navy-900 text-xs">Care Plan Active</span>
+          <span className="font-bold text-white text-xs font-display">Care Plan Active</span>
         </div>
       </div>
 
       {/* Upcoming Visit Card */}
       {upcomingVisit && (
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-subtle space-y-6">
-          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div className="rounded-3xl p-6 sm:p-8 glass-card border border-white/15 shadow-2xl space-y-6">
+          <div className="flex items-center justify-between pb-4 border-b border-white/10">
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-komfo-600">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-komfo-400">
                 Next Scheduled Visit
               </span>
-              <h3 className="text-xl font-bold font-display text-navy-900 mt-0.5">
+              <h3 className="text-xl font-bold font-display text-white mt-0.5">
                 {upcomingVisit.service?.title}
               </h3>
             </div>
@@ -243,30 +243,30 @@ export const PatientDashboard: React.FC = () => {
                 getStatusBadgeVariant(upcomingVisit.status).bg
               }`}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
               <span>{upcomingVisit.status}</span>
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono">
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
               <span className="text-slate-400 font-semibold uppercase text-[10px]">Date & Window</span>
-              <p className="font-bold text-slate-900 text-sm mt-1">{formatDate(upcomingVisit.scheduledDate)}</p>
-              <p className="text-slate-600">{upcomingVisit.scheduledTimeSlot}</p>
+              <p className="font-bold text-white text-sm mt-1">{formatDate(upcomingVisit.scheduledDate)}</p>
+              <p className="text-slate-400">{upcomingVisit.scheduledTimeSlot}</p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
               <span className="text-slate-400 font-semibold uppercase text-[10px]">Location Address</span>
-              <p className="font-bold text-slate-900 text-sm mt-1 truncate">{upcomingVisit.locationAddress}</p>
-              <p className="text-slate-600">Nairobi, Kenya</p>
+              <p className="font-bold text-white text-sm mt-1 truncate">{upcomingVisit.locationAddress}</p>
+              <p className="text-slate-400">Nairobi, Kenya</p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
               <span className="text-slate-400 font-semibold uppercase text-[10px]">Assigned Clinician</span>
-              <p className="font-bold text-slate-900 text-sm mt-1">
+              <p className="font-bold text-white text-sm mt-1 font-sans">
                 {upcomingVisit.professional?.fullName || 'Clinical Lead Assigned'}
               </p>
-              <p className="text-slate-600">{upcomingVisit.professional?.roleTitle || 'Licensed Nurse'}</p>
+              <p className="text-slate-400">{upcomingVisit.professional?.roleTitle || 'Licensed Nurse'}</p>
             </div>
           </div>
         </div>
@@ -277,41 +277,41 @@ export const PatientDashboard: React.FC = () => {
 
       {/* Care Plan & Emergency Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-subtle space-y-4">
-          <div className="flex items-center gap-2 text-navy-900 font-bold text-sm">
-            <ShieldCheck className="w-5 h-5 text-komfo-600" />
+        <div className="rounded-3xl p-6 sm:p-8 glass-card border border-white/15 shadow-2xl space-y-4">
+          <div className="flex items-center gap-2 text-white font-bold text-sm font-display">
+            <ShieldCheck className="w-5 h-5 text-emerald-400" />
             <span>Active Home Care Plan</span>
           </div>
           {p.carePlans && p.carePlans.length > 0 ? (
             <div className="space-y-3 text-xs">
-              <h4 className="font-bold text-slate-900">{p.carePlans[0].title}</h4>
-              <p className="text-slate-600 leading-relaxed">{p.carePlans[0].goals}</p>
-              <div className="p-3 bg-slate-50 rounded-xl font-semibold text-komfo-700">
+              <h4 className="font-bold text-white text-sm">{p.carePlans[0].title}</h4>
+              <p className="text-slate-300 leading-relaxed font-sans">{p.carePlans[0].goals}</p>
+              <div className="p-3 bg-white/5 rounded-xl font-mono font-semibold text-amber-400 border border-white/10">
                 Frequency: {p.carePlans[0].frequency}
               </div>
             </div>
           ) : (
-            <p className="text-xs text-slate-500">Your care plan will be generated following your initial assessment visit.</p>
+            <p className="text-xs text-slate-400 font-sans">Your care plan will be generated following your initial assessment visit.</p>
           )}
         </div>
 
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-subtle space-y-4">
-          <div className="flex items-center gap-2 text-navy-900 font-bold text-sm">
-            <User className="w-5 h-5 text-komfo-600" />
+        <div className="rounded-3xl p-6 sm:p-8 glass-card border border-white/15 shadow-2xl space-y-4">
+          <div className="flex items-center gap-2 text-white font-bold text-sm font-display">
+            <User className="w-5 h-5 text-komfo-400" />
             <span>Authorized Emergency Contact</span>
           </div>
-          <div className="space-y-2 text-xs">
+          <div className="space-y-2.5 text-xs font-mono">
             <div>
               <span className="text-slate-400">Name & Relation:</span>
-              <p className="font-bold text-slate-900">{p.emergencyContactName}</p>
+              <p className="font-bold text-white font-sans text-sm">{p.emergencyContactName}</p>
             </div>
             <div>
               <span className="text-slate-400">Emergency Phone:</span>
-              <p className="font-bold text-slate-900">{p.emergencyContactPhone}</p>
+              <p className="font-bold text-amber-400">{p.emergencyContactPhone}</p>
             </div>
             <div className="pt-2">
               <span className="text-slate-400">Known Allergies / Flags:</span>
-              <p className="font-medium text-slate-700">{p.knownAllergies || 'None recorded'}</p>
+              <p className="font-medium text-slate-300 font-sans">{p.knownAllergies || 'None recorded'}</p>
             </div>
           </div>
         </div>

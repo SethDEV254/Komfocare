@@ -53,9 +53,37 @@ export const ResourcesPage: React.FC = () => {
       isPublished: true,
       publishedAt: new Date().toISOString(),
     },
+    {
+      id: 'res-4',
+      slug: 'clinical-nutrition-and-wellness-guide',
+      title: 'Clinical Nutrition & Daily Vitality: Fueling Faster Recovery at Home',
+      excerpt: 'How tailored meal plans, antioxidant-rich smoothies, hydration schedules, and nutrient timing support post-acute wound healing and energy levels.',
+      content: 'Proper nutrition is a clinical cornerstone of successful home healing...',
+      category: 'NUTRITION & WELLNESS',
+      readTimeMinutes: 5,
+      featuredImage: '/images/nutrition-wellness.jpg',
+      authorName: 'Nurse Faith Wanjiru, RN',
+      authorRole: 'Nutrition & Home Health Clinician',
+      isPublished: true,
+      publishedAt: new Date().toISOString(),
+    },
+    {
+      id: 'res-5',
+      slug: 'holistic-home-healthcare-mind-body-recovery',
+      title: 'Holistic Home Care: Integrating Medical Science, Gentle Movement & Peace of Mind',
+      excerpt: 'A holistic guide to home recovery combining clinical nursing surveillance, customized physiotherapy exercises, and emotional well-being in familiar surroundings.',
+      content: 'True recovery happens when medical precision meets compassionate whole-person care...',
+      category: 'HOLISTIC CARE',
+      readTimeMinutes: 6,
+      featuredImage: '/images/holistic-health.jpg',
+      authorName: 'Dr. Evans Mwangi, CO',
+      authorRole: 'Clinical Operations Lead',
+      isPublished: true,
+      publishedAt: new Date().toISOString(),
+    },
   ];
 
-  const categories = ['ALL', 'RECOVERY', 'PREVENTIVE CARE', 'GERIATRIC CARE'];
+  const categories = ['ALL', 'RECOVERY', 'PREVENTIVE CARE', 'GERIATRIC CARE', 'NUTRITION & WELLNESS', 'HOLISTIC CARE'];
 
   const filteredArticles = defaultArticles.filter((item) => {
     const matchesCategory =
@@ -124,7 +152,7 @@ export const ResourcesPage: React.FC = () => {
                 alt={article.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0f0514] via-[#0f0514]/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0d1428] via-[#0d1428]/30 to-transparent" />
               <span className="absolute top-4 left-4 text-[10px] font-mono uppercase tracking-wider px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-amber-300 font-bold">
                 {article.category}
               </span>

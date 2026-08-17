@@ -1,28 +1,29 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
         komfo: {
-          50: '#f5f3ff',
-          100: '#ede9fe',
-          200: '#ddd6fe',
-          300: '#c4b5fd',
-          400: '#a78bfa',
-          500: '#8b5cf6',
-          600: '#7c3aed',
-          700: '#6d28d9',
-          800: '#5b21b6',
-          900: '#4c1d95',
-          950: '#2e1065',
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
+          950: '#172554',
         },
         dark: {
-          bg: '#08000a',
-          surface: '#0f0514',
-          card: '#160a1f',
+          bg: '#080d1a',
+          surface: '#0d1428',
+          card: '#111c36',
           border: 'rgba(255, 255, 255, 0.08)',
-          'border-strong': 'rgba(124, 58, 237, 0.35)',
+          'border-strong': 'rgba(37, 99, 235, 0.35)',
         },
         navy: {
           50: '#f0f4f8',
@@ -56,12 +57,12 @@ export default {
       },
       fontFamily: {
         sans: ['Figtree', 'Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
-        display: ['Outfit', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        display: ['Outfit', 'Plus Jakarta Sans', 'Figtree', 'sans-serif'],
       },
       boxShadow: {
         'subtle': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04)',
         'elevated': '0 20px 40px -15px rgba(0, 0, 0, 0.3)',
-        'glow': '0 0 25px -3px rgba(124, 58, 237, 0.35)',
+        'glow': '0 0 25px -3px rgba(37, 99, 235, 0.45)',
         'glow-amber': '0 0 25px -3px rgba(245, 158, 11, 0.3)',
         'card-dark': '0 24px 64px rgba(0, 0, 0, 0.45)',
       },

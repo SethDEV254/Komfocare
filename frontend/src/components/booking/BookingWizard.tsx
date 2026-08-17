@@ -333,26 +333,26 @@ export const BookingWizard: React.FC = () => {
       {step < 8 && (
         <div className="mb-8">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-komfo-600">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-komfo-400">
               Step {step} of 7: {stepTitles[step - 1]}
             </span>
-            <span className="text-xs font-semibold text-slate-500">
+            <span className="text-xs font-mono text-slate-400">
               {Math.round(((step - 1) / 7) * 100)}% Completed
             </span>
           </div>
 
-          <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+          <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
             <div
-              className="bg-gradient-to-r from-navy-900 to-komfo-600 h-full rounded-full transition-all duration-300 ease-out"
+              className="bg-gradient-to-r from-komfo-600 to-amber-500 h-full rounded-full transition-all duration-300 ease-out"
               style={{ width: `${(step / 7) * 100}%` }}
             />
           </div>
 
-          <div className="hidden sm:flex justify-between mt-3 text-[11px] text-slate-500 font-medium">
+          <div className="hidden sm:flex justify-between mt-3 text-[11px] font-mono text-slate-400">
             {stepTitles.slice(0, 7).map((t, idx) => (
               <span
                 key={t}
-                className={`${idx + 1 === step ? 'text-komfo-700 font-bold' : idx + 1 < step ? 'text-emerald-600' : 'text-slate-400'}`}
+                className={`${idx + 1 === step ? 'text-amber-400 font-bold' : idx + 1 < step ? 'text-emerald-400' : 'text-slate-500'}`}
               >
                 {t}
               </span>
@@ -363,8 +363,8 @@ export const BookingWizard: React.FC = () => {
 
       {/* Error alert */}
       {errorMsg && (
-        <div className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-center gap-3">
-          <AlertCircle className="w-5 h-5 flex-shrink-0 text-rose-600" />
+        <div className="mb-6 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-semibold flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 flex-shrink-0 text-rose-400" />
           <span>{errorMsg}</span>
         </div>
       )}
@@ -373,8 +373,8 @@ export const BookingWizard: React.FC = () => {
       {step === 1 && (
         <div className="space-y-6 animate-in fade-in duration-200">
           <div>
-            <h2 className="text-2xl font-bold font-display text-navy-900">Select Home Healthcare Service</h2>
-            <p className="text-sm text-slate-600 mt-1">
+            <h2 className="text-2xl font-bold font-display text-white">Select Home Healthcare Service</h2>
+            <p className="text-sm text-slate-300 mt-1 font-sans">
               Choose the primary clinical or supportive service required for your home visit.
             </p>
           </div>
@@ -386,14 +386,14 @@ export const BookingWizard: React.FC = () => {
                 <div
                   key={service.id}
                   onClick={() => handleSelectService(service)}
-                  className={`p-5 rounded-2xl border-2 cursor-pointer transition-all duration-200 flex flex-col justify-between ${
+                  className={`p-5 rounded-2xl border cursor-pointer transition-all duration-200 flex flex-col justify-between ${
                     isSelected
-                      ? 'border-komfo-600 bg-komfo-50/60 shadow-md ring-2 ring-komfo-500/20'
-                      : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-subtle'
+                      ? 'border-komfo-400 bg-komfo-950/60 shadow-glow ring-2 ring-komfo-500/30'
+                      : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10'
                   }`}
                 >
                   <div className="flex items-start justify-between mb-3">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${isSelected ? 'bg-komfo-600 text-white' : 'bg-slate-100 text-slate-700'}`}>
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${isSelected ? 'bg-komfo-600 text-white' : 'bg-white/10 text-slate-300'}`}>
                       <Heart className="w-5 h-5" />
                     </div>
                     {isSelected && (
@@ -404,13 +404,13 @@ export const BookingWizard: React.FC = () => {
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-slate-900 text-base">{service.title}</h3>
-                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">{service.shortDescription}</p>
+                    <h3 className="font-bold text-white text-base">{service.title}</h3>
+                    <p className="text-xs text-slate-300 mt-1 leading-relaxed">{service.shortDescription}</p>
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                    <span className="text-slate-500 font-medium">{service.durationMinutes} mins visit</span>
-                    <span className="font-bold text-navy-900">{formatCurrency(service.basePrice, service.currency)}</span>
+                  <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono">
+                    <span className="text-slate-400">{service.durationMinutes} mins visit</span>
+                    <span className="font-bold text-amber-400">{formatCurrency(service.basePrice, service.currency)}</span>
                   </div>
                 </div>
               );
@@ -423,16 +423,16 @@ export const BookingWizard: React.FC = () => {
       {step === 2 && (
         <div className="space-y-6 animate-in fade-in duration-200">
           <div>
-            <h2 className="text-2xl font-bold font-display text-navy-900">Patient & Contact Details</h2>
-            <p className="text-sm text-slate-600 mt-1">
+            <h2 className="text-2xl font-bold font-display text-white">Patient & Contact Details</h2>
+            <p className="text-sm text-slate-300 mt-1 font-sans">
               Provide accurate contact information so our clinical coordinators can reach you.
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-subtle space-y-4">
+          <div className="rounded-3xl p-6 sm:p-8 glass-card border border-white/15 shadow-2xl space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                   Patient Full Name *
                 </label>
                 <div className="relative">
@@ -443,13 +443,13 @@ export const BookingWizard: React.FC = () => {
                     placeholder="e.g. Esther Njeri Karanja"
                     value={formData.patientName}
                     onChange={(e) => setFormData({ ...formData, patientName: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-komfo-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-komfo-400 focus:ring-2 focus:ring-komfo-500/20"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                   Phone Number *
                 </label>
                 <div className="relative">
@@ -460,7 +460,7 @@ export const BookingWizard: React.FC = () => {
                     placeholder="+254 7XX XXX XXX"
                     value={formData.patientPhone}
                     onChange={(e) => setFormData({ ...formData, patientPhone: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-komfo-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-komfo-400 focus:ring-2 focus:ring-komfo-500/20"
                   />
                 </div>
               </div>
@@ -468,7 +468,7 @@ export const BookingWizard: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                   Email Address
                 </label>
                 <div className="relative">
@@ -478,26 +478,26 @@ export const BookingWizard: React.FC = () => {
                     placeholder="patient@example.com"
                     value={formData.patientEmail}
                     onChange={(e) => setFormData({ ...formData, patientEmail: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-komfo-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-komfo-400 focus:ring-2 focus:ring-komfo-500/20"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                   Date of Birth (Optional)
                 </label>
                 <input
                   type="date"
                   value={formData.patientDob}
                   onChange={(e) => setFormData({ ...formData, patientDob: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-komfo-500 focus:border-transparent text-slate-700"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white text-sm focus:outline-none focus:border-komfo-400 focus:ring-2 focus:ring-komfo-500/20 [color-scheme:dark]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+              <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                 Home Address & Location *
               </label>
               <div className="relative">
@@ -508,19 +508,19 @@ export const BookingWizard: React.FC = () => {
                   placeholder="e.g. House 14, Riverside Drive, Westlands, Nairobi"
                   value={formData.patientLocation}
                   onChange={(e) => setFormData({ ...formData, patientLocation: e.target.value })}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-komfo-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-komfo-400 focus:ring-2 focus:ring-komfo-500/20"
                 />
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-100">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-navy-900 mb-3 flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-komfo-600" />
+            <div className="pt-4 border-t border-white/10">
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-amber-400" />
                 Emergency Contact Details
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">
+                  <label className="block text-xs font-mono text-slate-300 mb-1">
                     Emergency Contact Name *
                   </label>
                   <input
@@ -529,11 +529,11 @@ export const BookingWizard: React.FC = () => {
                     placeholder="e.g. Samuel Karanja (Son)"
                     value={formData.emergencyContactName}
                     onChange={(e) => setFormData({ ...formData, emergencyContactName: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-komfo-500"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-komfo-400 focus:ring-2 focus:ring-komfo-500/20"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-600 mb-1">
+                  <label className="block text-xs font-mono text-slate-300 mb-1">
                     Emergency Contact Phone *
                   </label>
                   <input
@@ -542,7 +542,7 @@ export const BookingWizard: React.FC = () => {
                     placeholder="+254 7XX XXX XXX"
                     value={formData.emergencyContactPhone}
                     onChange={(e) => setFormData({ ...formData, emergencyContactPhone: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-komfo-500"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-komfo-400 focus:ring-2 focus:ring-komfo-500/20"
                   />
                 </div>
               </div>
@@ -555,15 +555,15 @@ export const BookingWizard: React.FC = () => {
       {step === 3 && (
         <div className="space-y-6 animate-in fade-in duration-200">
           <div>
-            <h2 className="text-2xl font-bold font-display text-navy-900">Care Requirements</h2>
-            <p className="text-sm text-slate-600 mt-1">
+            <h2 className="text-2xl font-bold font-display text-white">Care Requirements</h2>
+            <p className="text-sm text-slate-300 mt-1 font-sans">
               Describe the specific support, symptoms, or doctor instructions for this visit.
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-subtle space-y-4">
+          <div className="rounded-3xl p-6 sm:p-8 glass-card border border-white/15 shadow-2xl space-y-4">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+              <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                 Describe the patient's care needs & symptoms *
               </label>
               <textarea
@@ -572,12 +572,12 @@ export const BookingWizard: React.FC = () => {
                 placeholder="e.g. Post-knee surgery dressing change required, assistance with gentle rehabilitation exercises, monitoring blood pressure, and ensuring morning medication compliance."
                 value={formData.careRequirements}
                 onChange={(e) => setFormData({ ...formData, careRequirements: e.target.value })}
-                className="w-full p-4 rounded-2xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-komfo-500 focus:border-transparent leading-relaxed"
+                className="w-full p-4 rounded-2xl bg-white/5 border border-white/15 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-komfo-400 focus:ring-2 focus:ring-komfo-500/20 leading-relaxed font-sans"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+              <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-2">
                 Patient Mobility Status
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -588,8 +588,8 @@ export const BookingWizard: React.FC = () => {
                     onClick={() => setFormData({ ...formData, mobilityStatus: m })}
                     className={`py-3 px-4 rounded-xl text-xs font-semibold border text-center transition-all ${
                       formData.mobilityStatus === m
-                        ? 'border-komfo-600 bg-komfo-50 text-komfo-700 ring-2 ring-komfo-500/20'
-                        : 'border-slate-200 text-slate-700 hover:border-slate-300'
+                        ? 'border-komfo-400 bg-komfo-900/50 text-white shadow-glow ring-2 ring-komfo-500/30'
+                        : 'border-white/10 bg-white/5 text-slate-300 hover:border-white/20 hover:text-white'
                     }`}
                   >
                     {m}
@@ -605,15 +605,15 @@ export const BookingWizard: React.FC = () => {
       {step === 4 && (
         <div className="space-y-6 animate-in fade-in duration-200">
           <div>
-            <h2 className="text-2xl font-bold font-display text-navy-900">Preferred Visit Date</h2>
-            <p className="text-sm text-slate-600 mt-1">
+            <h2 className="text-2xl font-bold font-display text-white">Preferred Visit Date</h2>
+            <p className="text-sm text-slate-300 mt-1 font-sans">
               Select the date when you would like the healthcare professional to visit.
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-subtle space-y-4">
+          <div className="rounded-3xl p-6 sm:p-8 glass-card border border-white/15 shadow-2xl space-y-4">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+              <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-2">
                 Select Date *
               </label>
               <input
@@ -622,14 +622,14 @@ export const BookingWizard: React.FC = () => {
                 min={new Date().toISOString().split('T')[0]}
                 value={formData.preferredDate}
                 onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
-                className="w-full max-w-sm px-4 py-3 rounded-2xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-komfo-500 text-slate-800"
+                className="w-full max-w-sm px-4 py-3 rounded-2xl bg-white/5 border border-white/15 text-white text-sm focus:outline-none focus:border-komfo-400 focus:ring-2 focus:ring-komfo-500/20 [color-scheme:dark]"
               />
             </div>
 
-            <div className="p-4 rounded-2xl bg-komfo-50/70 border border-komfo-100 flex items-start gap-3 text-xs text-komfo-900">
-              <CalendarIcon className="w-5 h-5 text-komfo-600 flex-shrink-0 mt-0.5" />
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-3 text-xs text-slate-300 font-sans">
+              <CalendarIcon className="w-5 h-5 text-komfo-400 flex-shrink-0 mt-0.5" />
               <p>
-                <strong>Flexible Scheduling:</strong> If you need recurring weekly visits (e.g. 2x or 3x per week), our clinical supervisor will establish a regular schedule with you during the assessment call.
+                <strong className="text-white">Flexible Scheduling:</strong> If you need recurring weekly visits (e.g. 2x or 3x per week), our clinical supervisor will establish a regular schedule with you during the assessment call.
               </p>
             </div>
           </div>
@@ -640,8 +640,8 @@ export const BookingWizard: React.FC = () => {
       {step === 5 && (
         <div className="space-y-6 animate-in fade-in duration-200">
           <div>
-            <h2 className="text-2xl font-bold font-display text-navy-900">Preferred Time Slot</h2>
-            <p className="text-sm text-slate-600 mt-1">
+            <h2 className="text-2xl font-bold font-display text-white">Preferred Time Slot</h2>
+            <p className="text-sm text-slate-300 mt-1 font-sans">
               Choose the window of time that best suits your home routine.
             </p>
           </div>
@@ -658,21 +658,21 @@ export const BookingWizard: React.FC = () => {
                 <div
                   key={item.slot}
                   onClick={() => setFormData({ ...formData, preferredTimeSlot: item.slot })}
-                  className={`p-5 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${
+                  className={`p-5 rounded-2xl border cursor-pointer transition-all duration-200 ${
                     isSelected
-                      ? 'border-komfo-600 bg-komfo-50/60 shadow-md ring-2 ring-komfo-500/20'
-                      : 'border-slate-200 bg-white hover:border-slate-300'
+                      ? 'border-komfo-400 bg-komfo-950/60 shadow-glow ring-2 ring-komfo-500/30'
+                      : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
                     <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-komfo-600" />
-                      <span className="font-bold text-slate-900 text-sm">{item.label}</span>
+                      <Clock className="w-4 h-4 text-komfo-400" />
+                      <span className="font-bold text-white text-sm">{item.label}</span>
                     </div>
-                    {isSelected && <CheckCircle2 className="w-5 h-5 text-komfo-600" />}
+                    {isSelected && <CheckCircle2 className="w-5 h-5 text-komfo-400" />}
                   </div>
-                  <p className="text-sm font-semibold text-komfo-700">{item.slot}</p>
-                  <p className="text-xs text-slate-500 mt-2">{item.note}</p>
+                  <p className="text-sm font-semibold font-mono text-amber-400">{item.slot}</p>
+                  <p className="text-xs text-slate-400 mt-2 font-sans">{item.note}</p>
                 </div>
               );
             })}
@@ -684,15 +684,15 @@ export const BookingWizard: React.FC = () => {
       {step === 6 && (
         <div className="space-y-6 animate-in fade-in duration-200">
           <div>
-            <h2 className="text-2xl font-bold font-display text-navy-900">Additional Instructions & Gate Access</h2>
-            <p className="text-sm text-slate-600 mt-1">
+            <h2 className="text-2xl font-bold font-display text-white">Additional Instructions & Gate Access</h2>
+            <p className="text-sm text-slate-300 mt-1 font-sans">
               Add any special directions, gate codes, or notes for the visiting clinician.
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-subtle space-y-4">
+          <div className="rounded-3xl p-6 sm:p-8 glass-card border border-white/15 shadow-2xl space-y-4">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+              <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                 Special Notes / Gate Codes / Directions
               </label>
               <textarea
@@ -700,7 +700,7 @@ export const BookingWizard: React.FC = () => {
                 placeholder="e.g. Ring Gate Bell 4, parking available inside compound, patient speaks Swahili and English."
                 value={formData.additionalNotes}
                 onChange={(e) => setFormData({ ...formData, additionalNotes: e.target.value })}
-                className="w-full p-4 rounded-2xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-komfo-500"
+                className="w-full p-4 rounded-2xl bg-white/5 border border-white/15 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-komfo-400 focus:ring-2 focus:ring-komfo-500/20 font-sans"
               />
             </div>
           </div>
@@ -711,59 +711,59 @@ export const BookingWizard: React.FC = () => {
       {step === 7 && (
         <div className="space-y-6 animate-in fade-in duration-200">
           <div>
-            <h2 className="text-2xl font-bold font-display text-navy-900">Review Your Home Care Request</h2>
-            <p className="text-sm text-slate-600 mt-1">
+            <h2 className="text-2xl font-bold font-display text-white">Review Your Home Care Request</h2>
+            <p className="text-sm text-slate-300 mt-1 font-sans">
               Please verify your information before submitting for clinical review.
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-subtle divide-y divide-slate-100 space-y-5">
+          <div className="rounded-3xl p-6 sm:p-8 glass-card border border-white/15 shadow-2xl divide-y divide-white/10 space-y-5">
             {/* Service & Price */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-5">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-komfo-600">Selected Service</span>
-                <h3 className="text-xl font-bold text-navy-900">{formData.serviceTitle}</h3>
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-komfo-400">Selected Service</span>
+                <h3 className="text-xl font-bold font-display text-white">{formData.serviceTitle}</h3>
               </div>
               <div className="text-left sm:text-right">
-                <span className="text-xs text-slate-500">Base Visit Fee</span>
-                <p className="text-xl font-bold text-navy-900">{formatCurrency(formData.servicePrice)}</p>
+                <span className="text-xs font-mono text-slate-400 uppercase">Base Visit Fee</span>
+                <p className="text-xl font-bold text-amber-400 font-display">{formatCurrency(formData.servicePrice)}</p>
               </div>
             </div>
 
             {/* Patient & Location */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5 text-xs font-mono">
               <div>
-                <span className="text-slate-500 font-medium">Patient Name:</span>
-                <p className="text-sm font-bold text-slate-800 mt-0.5">{formData.patientName}</p>
+                <span className="text-slate-400 font-medium">Patient Name:</span>
+                <p className="text-sm font-bold text-white mt-0.5">{formData.patientName}</p>
               </div>
               <div>
-                <span className="text-slate-500 font-medium">Phone Number:</span>
-                <p className="text-sm font-bold text-slate-800 mt-0.5">{formData.patientPhone}</p>
+                <span className="text-slate-400 font-medium">Phone Number:</span>
+                <p className="text-sm font-bold text-white mt-0.5">{formData.patientPhone}</p>
               </div>
               <div className="sm:col-span-2">
-                <span className="text-slate-500 font-medium">Visit Address:</span>
-                <p className="text-sm font-semibold text-slate-800 mt-0.5">{formData.patientLocation}</p>
+                <span className="text-slate-400 font-medium">Visit Address:</span>
+                <p className="text-sm font-semibold text-slate-200 mt-0.5">{formData.patientLocation}</p>
               </div>
             </div>
 
             {/* Schedule */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5 text-xs font-mono">
               <div>
-                <span className="text-slate-500 font-medium">Preferred Date:</span>
-                <p className="text-sm font-bold text-slate-800 mt-0.5">{formData.preferredDate}</p>
+                <span className="text-slate-400 font-medium">Preferred Date:</span>
+                <p className="text-sm font-bold text-white mt-0.5">{formData.preferredDate}</p>
               </div>
               <div>
-                <span className="text-slate-500 font-medium">Preferred Time Slot:</span>
-                <p className="text-sm font-bold text-slate-800 mt-0.5">{formData.preferredTimeSlot}</p>
+                <span className="text-slate-400 font-medium">Preferred Time Slot:</span>
+                <p className="text-sm font-bold text-amber-400 mt-0.5">{formData.preferredTimeSlot}</p>
               </div>
             </div>
 
             {/* Safety notice */}
             <div className="pt-5">
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-komfo-600 flex-shrink-0 mt-0.5" />
+              <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-xs text-slate-300 flex items-start gap-3 font-sans">
+                <ShieldCheck className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                 <p>
-                  <strong>Clinical Review Policy:</strong> All home care requests undergo clinical triage by our registered care supervisors to ensure patient safety and proper professional assignment before confirmation.
+                  <strong className="text-white">Clinical Review Policy:</strong> All home care requests undergo clinical triage by our registered care supervisors to ensure patient safety and proper professional assignment before confirmation.
                 </p>
               </div>
             </div>
@@ -773,42 +773,42 @@ export const BookingWizard: React.FC = () => {
 
       {/* STEP 8: Submission Confirmation */}
       {step === 8 && submissionResult && (
-        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-elevated text-center space-y-6 animate-in zoom-in-95 duration-300">
-          <div className="w-16 h-16 rounded-3xl bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center shadow-subtle">
+        <div className="rounded-3xl p-8 sm:p-12 glass-card border border-white/15 shadow-2xl text-center space-y-6 animate-in zoom-in-95 duration-300">
+          <div className="w-16 h-16 rounded-3xl bg-emerald-500/20 text-emerald-400 border border-emerald-400/30 mx-auto flex items-center justify-center shadow-glow">
             <CheckCircle2 className="w-10 h-10" />
           </div>
 
           <div>
-            <h2 className="text-3xl font-extrabold font-display text-navy-900 tracking-tight">
+            <h2 className="text-3xl font-extrabold font-display text-white tracking-tight">
               Care Request Received
             </h2>
-            <p className="text-sm text-slate-600 max-w-md mx-auto mt-2 leading-relaxed">
+            <p className="text-sm text-slate-300 max-w-md mx-auto mt-2 leading-relaxed font-sans">
               Your home healthcare request has been safely logged in our clinical queue. Our care coordination team will review your request shortly.
             </p>
           </div>
 
           {/* Reference Code Card */}
-          <div className="max-w-md mx-auto p-5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+          <div className="max-w-md mx-auto p-5 rounded-2xl bg-white/5 border border-white/15 flex items-center justify-between">
             <div className="text-left">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400">
                 Request Reference Number
               </span>
-              <p className="text-2xl font-mono font-extrabold text-navy-900 tracking-wide">
+              <p className="text-2xl font-mono font-extrabold text-amber-400 tracking-wide">
                 {submissionResult.referenceNumber}
               </p>
             </div>
             <button
               onClick={copyRefCode}
-              className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-slate-300 text-slate-600 hover:text-navy-900 transition-colors shadow-sm"
+              className="p-2.5 rounded-xl bg-white/10 border border-white/15 hover:bg-white/20 text-slate-200 hover:text-white transition-colors shadow-sm"
               title="Copy reference code"
             >
-              {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+              {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
             </button>
           </div>
 
           {/* Next steps breakdown */}
-          <div className="max-w-lg mx-auto text-left space-y-3 p-5 rounded-2xl bg-komfo-50/70 border border-komfo-100 text-xs text-slate-700">
-            <h4 className="font-bold text-komfo-900 uppercase tracking-wider">What happens next?</h4>
+          <div className="max-w-lg mx-auto text-left space-y-3 p-5 rounded-2xl bg-white/5 border border-white/10 text-xs text-slate-300 font-sans">
+            <h4 className="font-bold text-white uppercase tracking-wider font-mono">What happens next?</h4>
             <ul className="space-y-2 list-disc list-inside">
               <li>Our clinical coordinator will review medical history and specific needs.</li>
               <li>A registered nurse or specialist will be assigned based on geographic proximity and care specialty.</li>
@@ -819,13 +819,13 @@ export const BookingWizard: React.FC = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <button
               onClick={() => navigate(`/track-request?ref=${submissionResult.referenceNumber}`)}
-              className="w-full sm:w-auto px-6 py-3 rounded-full bg-navy-900 hover:bg-navy-950 text-white font-semibold text-xs tracking-wide shadow-md transition-all"
+              className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-komfo-600 via-komfo-500 to-indigo-600 hover:from-komfo-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-widest shadow-glow hover:scale-105 transition-all"
             >
               Track Request Status Live
             </button>
             <button
               onClick={() => navigate('/')}
-              className="w-full sm:w-auto px-6 py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-slate-300 hover:text-white font-semibold text-xs transition-colors"
             >
               Return to Homepage
             </button>
@@ -835,12 +835,12 @@ export const BookingWizard: React.FC = () => {
 
       {/* Navigation Buttons for Steps 1-7 */}
       {step < 8 && (
-        <div className="mt-8 flex items-center justify-between pt-6 border-t border-slate-200">
+        <div className="mt-8 flex items-center justify-between pt-6 border-t border-white/10">
           {step > 1 ? (
             <button
               type="button"
               onClick={prevStep}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-xs transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-slate-300 hover:text-white font-semibold text-xs transition-colors font-mono"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Previous Step</span>
@@ -853,7 +853,7 @@ export const BookingWizard: React.FC = () => {
             <button
               type="button"
               onClick={nextStep}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-navy-900 to-komfo-700 hover:from-navy-950 hover:to-komfo-800 text-white font-semibold text-xs shadow-md hover:shadow-lg transition-all"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-komfo-600 via-komfo-500 to-indigo-600 hover:from-komfo-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-widest shadow-glow hover:scale-105 transition-all"
             >
               <span>Continue</span>
               <ArrowRight className="w-4 h-4" />
@@ -863,7 +863,7 @@ export const BookingWizard: React.FC = () => {
               type="button"
               disabled={submitting}
               onClick={handleSubmit}
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs tracking-wide shadow-md hover:shadow-lg transition-all disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs uppercase tracking-widest shadow-glow hover:scale-105 transition-all disabled:opacity-50"
             >
               {submitting ? (
                 <>

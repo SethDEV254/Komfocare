@@ -82,16 +82,16 @@ export const VisitDocumentationModal: React.FC<VisitModalProps> = ({
       subtitle={`Patient: ${appointment.patient?.fullName || 'Patient'} • Service: ${appointment.service?.title}`}
       maxWidth="2xl"
     >
-      <form onSubmit={handleSubmit} className="space-y-5 text-xs">
+      <form onSubmit={handleSubmit} className="space-y-5 text-xs font-sans">
         {errorMsg && (
-          <div className="p-3 bg-rose-50 text-rose-800 rounded-xl border border-rose-200">
+          <div className="p-3 bg-rose-500/10 text-rose-300 rounded-xl border border-rose-500/30">
             {errorMsg}
           </div>
         )}
 
         {/* Clinical Services & Observations */}
         <div>
-          <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+          <label className="block font-mono text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">
             Clinical Services Provided *
           </label>
           <textarea
@@ -100,12 +100,12 @@ export const VisitDocumentationModal: React.FC<VisitModalProps> = ({
             placeholder="e.g. Sterile surgical incision redressing, medication compliance check, assisted physical therapy transfer."
             value={formData.servicesProvided}
             onChange={(e) => setFormData({ ...formData, servicesProvided: e.target.value })}
-            className="w-full p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-komfo-500 focus:outline-none"
+            className="w-full p-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-500 text-xs focus:ring-2 focus:ring-komfo-500 focus:outline-none focus:border-komfo-400"
           />
         </div>
 
         <div>
-          <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+          <label className="block font-mono text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">
             Clinical Observations & Examination *
           </label>
           <textarea
@@ -114,71 +114,71 @@ export const VisitDocumentationModal: React.FC<VisitModalProps> = ({
             placeholder="e.g. Wound edges well-approximated, no signs of purulent discharge or edema. Patient alert, oriented x3."
             value={formData.clinicalObservations}
             onChange={(e) => setFormData({ ...formData, clinicalObservations: e.target.value })}
-            className="w-full p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-komfo-500 focus:outline-none"
+            className="w-full p-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-500 text-xs focus:ring-2 focus:ring-komfo-500 focus:outline-none focus:border-komfo-400"
           />
         </div>
 
         {/* Vital Signs Grid */}
-        <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
-          <div className="flex items-center gap-2 font-bold text-navy-900 uppercase tracking-wider text-[11px]">
-            <Activity className="w-4 h-4 text-komfo-600" />
+        <div className="p-4 bg-white/5 rounded-2xl border border-white/10 space-y-3 font-mono">
+          <div className="flex items-center gap-2 font-bold text-amber-400 uppercase tracking-wider text-[11px]">
+            <Activity className="w-4 h-4 text-komfo-400" />
             <span>Vital Signs Examination (Optional)</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div>
-              <label className="block text-slate-600 font-medium mb-1">BP (Systolic / Diastolic)</label>
+              <label className="block text-slate-400 font-medium mb-1 text-[10px]">BP (Sys / Dia)</label>
               <div className="flex items-center gap-1">
                 <input
                   type="number"
                   placeholder="120"
                   value={formData.systolicBP}
                   onChange={(e) => setFormData({ ...formData, systolicBP: e.target.value })}
-                  className="w-full p-2 bg-white rounded-lg border border-slate-300 text-center"
+                  className="w-full p-2 bg-white/5 rounded-lg border border-white/15 text-white text-center text-xs focus:border-komfo-400 focus:outline-none"
                 />
-                <span>/</span>
+                <span className="text-slate-500">/</span>
                 <input
                   type="number"
                   placeholder="80"
                   value={formData.diastolicBP}
                   onChange={(e) => setFormData({ ...formData, diastolicBP: e.target.value })}
-                  className="w-full p-2 bg-white rounded-lg border border-slate-300 text-center"
+                  className="w-full p-2 bg-white/5 rounded-lg border border-white/15 text-white text-center text-xs focus:border-komfo-400 focus:outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-slate-600 font-medium mb-1">Heart Rate (bpm)</label>
+              <label className="block text-slate-400 font-medium mb-1 text-[10px]">Heart Rate (bpm)</label>
               <input
                 type="number"
                 placeholder="72"
                 value={formData.heartRate}
                 onChange={(e) => setFormData({ ...formData, heartRate: e.target.value })}
-                className="w-full p-2 bg-white rounded-lg border border-slate-300"
+                className="w-full p-2 bg-white/5 rounded-lg border border-white/15 text-white text-xs focus:border-komfo-400 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-slate-600 font-medium mb-1">SpO2 (%)</label>
+              <label className="block text-slate-400 font-medium mb-1 text-[10px]">SpO2 (%)</label>
               <input
                 type="number"
                 step="0.1"
                 placeholder="98"
                 value={formData.spO2}
                 onChange={(e) => setFormData({ ...formData, spO2: e.target.value })}
-                className="w-full p-2 bg-white rounded-lg border border-slate-300"
+                className="w-full p-2 bg-white/5 rounded-lg border border-white/15 text-white text-xs focus:border-komfo-400 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-slate-600 font-medium mb-1">Glucose (mmol/L)</label>
+              <label className="block text-slate-400 font-medium mb-1 text-[10px]">Glucose (mmol/L)</label>
               <input
                 type="number"
                 step="0.1"
                 placeholder="5.6"
                 value={formData.bloodGlucose}
                 onChange={(e) => setFormData({ ...formData, bloodGlucose: e.target.value })}
-                className="w-full p-2 bg-white rounded-lg border border-slate-300"
+                className="w-full p-2 bg-white/5 rounded-lg border border-white/15 text-white text-xs focus:border-komfo-400 focus:outline-none"
               />
             </div>
           </div>
@@ -187,42 +187,42 @@ export const VisitDocumentationModal: React.FC<VisitModalProps> = ({
         {/* Follow-up & Recommendations */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+            <label className="block font-mono text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">
               Patient Response
             </label>
             <input
               type="text"
               value={formData.patientResponse}
               onChange={(e) => setFormData({ ...formData, patientResponse: e.target.value })}
-              className="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-komfo-500"
+              className="w-full p-2.5 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:ring-2 focus:ring-komfo-500 focus:outline-none focus:border-komfo-400"
             />
           </div>
 
           <div>
-            <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
+            <label className="block font-mono text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">
               Follow-Up Recommendation
             </label>
             <input
               type="text"
               value={formData.followUpRecommendation}
               onChange={(e) => setFormData({ ...formData, followUpRecommendation: e.target.value })}
-              className="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-komfo-500"
+              className="w-full p-2.5 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:ring-2 focus:ring-komfo-500 focus:outline-none focus:border-komfo-400"
             />
           </div>
         </div>
 
-        <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+        <div className="pt-4 border-t border-white/10 flex items-center justify-end gap-3 font-mono">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl border border-slate-300 text-slate-700 font-semibold hover:bg-slate-50"
+            className="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-slate-300 hover:text-white font-semibold text-xs transition-colors"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={submitting}
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-navy-900 to-komfo-700 text-white font-bold shadow-md hover:shadow-lg disabled:opacity-50"
+            className="px-6 py-2.5 rounded-full bg-gradient-to-r from-komfo-600 to-indigo-600 hover:from-komfo-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-wider shadow-glow hover:scale-105 transition-all disabled:opacity-50"
           >
             {submitting ? 'Saving Clinical Record...' : 'Complete Visit & Save Notes'}
           </button>

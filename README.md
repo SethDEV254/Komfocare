@@ -1,48 +1,46 @@
-# KomfoCare — Compassionate Care, Right at Home
+# KOMFOCARE HOME-BASED SERVICES — Compassionate Care. Right at Home.
 
-> A modern, full-stack home-based healthcare platform connecting licensed clinicians, registered nurses, and caregivers with patients in need of personalized clinical and supportive home care.
+> "We come to you, so you can stay where you feel safe."
+> **Professional care. Personal touch. Peace of mind.**
+
+KOMFOCARE HOME-BASED SERVICES connects licensed registered nurses, geriatric specialists, and clinical practitioners with families in Nairobi, Kenya, delivering personalized, hospital-grade home healthcare.
 
 ---
 
-## 🌟 Overview & Features
+## 📋 Company & Founder Overview
 
-### 1. Patient & Public Experience
-- **Interactive Multi-Step Booking Wizard**: 8-step intake flow with real-time reference generation (`KC-2026-XXXX`).
-- **Live Status Tracker**: Real-time progress monitoring (`Requested` → `Pending Review` → `Assessment` → `Confirmed` → `Assigned` → `In Progress` → `Completed`).
-- **8 Dedicated Clinical Service Catalog Pages**:
-  - *Home Nursing Care*
-  - *Elderly Care*
-  - *Post-Surgery Care*
-  - *Medication Management*
-  - *Palliative Care*
-  - *Patient Escort*
-  - *Vital Signs Monitoring*
-  - *Health Education*
-- **Clinicians Directory**: Verified profiles with specialties, qualifications, experience, and direct booking triggers.
-- **Health Resources / Blog**: Filterable clinical guidance articles with estimated reading time.
-- **Service Area Coverage**: Nairobi metropolitan coverage points and regional availability indicator.
-- **Safety Compliance**: Explicit non-alarmist medical disclaimers and emergency hotline banner.
+- **Company**: KOMFOCARE HOME-BASED SERVICES
+- **Founder**: OBIERO SHANICE AUMA
+- **Phone / Helpline**: `0792004232`
+- **Primary Booking Email**: `komfocare@gmail.com`
+- **Founder Email**: `obieroshanice@gmail.com`
+- **Location**: Nairobi, Kenya
+- **Website**: `www.komfocare.com`
+- **Socials**: Facebook (`KomfoCare`), Instagram (`@KomfoCare`), Twitter/X (`@KomfoCare`)
+- **Tagline**: *"Compassionate care. Right at home."*
+- **Core Promise**: *"We bring quality care to you, so you can focus on what matters most."*
 
-### 2. Role-Based Portals
-- **Patient Care Portal (`/dashboard/patient`)**:
-  - Upcoming home visit card with clinician details
-  - Interactive Vital Signs Trends Chart (BP, Heart Rate, SpO2, Blood Glucose, Temperature)
-  - Active personalized Care Plan and emergency contacts
-- **Clinician Care Desk (`/dashboard/professional`)**:
-  - Assigned home visits schedule & patient location directions
-  - "Record Visit Documentation" modal for clinical observations, administered care, and vitals recording
-- **Clinical Operations Center (`/dashboard/admin`)**:
-  - KPI operational dashboard (Active visits, revenue, pending requests, patient registry)
-  - Service Requests Pipeline with interactive status transitions
+---
+
+## 🌟 8 Detailed Clinical Care Disciplines
+
+1. **HOME NURSING CARE** — Professional nursing care tailored to your needs.
+2. **ELDERLY CARE** — Compassionate care and assistance for seniors.
+3. **POST-SURGERY CARE** — Helping you heal safely and comfortably at home.
+4. **MEDICATION MANAGEMENT** — Safe medication reminders and administration.
+5. **PALLIATIVE CARE** — Dignified care focused on comfort and quality of life.
+6. **PATIENT ESCORT SERVICES** — Assistance to and from medical appointments.
+7. **VITAL SIGNS MONITORING** — Regular monitoring for your health and peace of mind.
+8. **HEALTH EDUCATION** — Empowering you and your family with health knowledge.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS, Lucide React, Framer Motion
+- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS (with Dark/Light theme toggle persistence), Lucide React
 - **Backend**: Node.js, Express, TypeScript, Prisma ORM, JWT Authentication, Zod, Helmet, Morgan
-- **Database**: PostgreSQL (Production / Railway-ready) with seamless fallback
-- **Deployment**: Railway (Backend + PostgreSQL) & Vercel / Netlify / Railway (Frontend)
+- **Database**: PostgreSQL (Production / Railway-ready) with dynamic fallback
+- **Deployment**: Railway (Backend + PostgreSQL) & Vercel / Netlify (Frontend)
 
 ---
 
@@ -74,8 +72,8 @@ JWT_SECRET="komfocare_jwt_secret_key_change_in_production_2026_super_secure"
 JWT_REFRESH_SECRET="komfocare_jwt_refresh_secret_key_2026_super_secure"
 JWT_EXPIRES_IN="1d"
 JWT_REFRESH_EXPIRES_IN="7d"
-EMERGENCY_HOTLINE="+254 700 000 000"
-SUPPORT_EMAIL="care@komfocare.com"
+EMERGENCY_HOTLINE="0792004232"
+SUPPORT_EMAIL="komfocare@gmail.com"
 ```
 
 ### 3. Run Development Servers
@@ -93,24 +91,12 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ## 🔑 Demo Logins
 
-The login interface (`/login`) includes **1-Click Test Accounts** for immediate testing without manual signups:
+The login interface (`/login`) includes **1-Click Test Accounts** for immediate testing:
 - **Admin**: Clinical Operations Center
 - **Nurse Lead**: Clinician Care Desk & Visit Documentation
 - **Patient**: Patient Portal & Vital Signs Tracking
 
 ---
 
-## 🚢 Railway Deployment Guide
-
-1. Create a new project on [Railway](https://railway.app).
-2. Provision a **PostgreSQL** database plugin.
-3. Connect this repository and set root directory to `backend`.
-4. Add environment variables in Railway dashboard:
-   - `DATABASE_URL` (linked automatically from Railway Postgres)
-   - `JWT_SECRET`, `JWT_REFRESH_SECRET`, `FRONTEND_URL`
-5. Railway will automatically detect `Procfile` / `railway.json` and deploy.
-
----
-
 ## 📄 License
-ISC License © 2026 KomfoCare Team
+ISC License © 2026 KOMFOCARE HOME-BASED SERVICES

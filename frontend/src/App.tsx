@@ -33,7 +33,7 @@ const ProtectedDashboardRoute: React.FC<{ children?: React.ReactNode }> = () => 
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="min-h-screen flex items-center justify-center bg-[#080d1a] text-white">
         <div className="w-8 h-8 border-4 border-komfo-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -46,7 +46,7 @@ const ProtectedDashboardRoute: React.FC<{ children?: React.ReactNode }> = () => 
 export const App: React.FC = () => {
   return (
     <AuthProvider>
-      <Router>
+      <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
           {/* Public Routes with PublicLayout */}
           <Route element={<PublicLayout />}>

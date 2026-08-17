@@ -48,27 +48,27 @@ export const Modal: React.FC<ModalProps> = ({
       <div className="flex min-h-screen items-center justify-center p-4 text-center">
         {/* Backdrop */}
         <div
-          className="fixed inset-0 bg-navy-950/60 backdrop-blur-sm transition-opacity"
+          className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity"
           onClick={onClose}
           aria-hidden="true"
         />
 
         {/* Modal Dialog Card */}
         <div
-          className={`relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all w-full ${maxWidthClasses} border border-slate-100 p-6 sm:p-8 z-10`}
+          className={`relative transform overflow-hidden rounded-3xl bg-[#12071d] text-left shadow-2xl transition-all w-full ${maxWidthClasses} border border-white/15 p-6 sm:p-8 z-10 text-slate-100`}
           role="dialog"
           aria-modal="true"
         >
           {/* Header */}
-          <div className="flex items-start justify-between pb-4 border-b border-slate-100 mb-6">
+          <div className="flex items-start justify-between pb-4 border-b border-white/10 mb-6">
             <div>
-              <h3 className="text-xl font-bold font-display text-navy-900 tracking-tight">{title}</h3>
-              {subtitle && <p className="text-xs text-slate-500 mt-1">{subtitle}</p>}
+              <h3 className="text-xl font-bold font-display text-white tracking-tight">{title}</h3>
+              {subtitle && <p className="text-xs text-slate-400 mt-1 font-sans">{subtitle}</p>}
             </div>
             <button
               onClick={onClose}
               aria-label="Close modal"
-              className="rounded-xl p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors"
+              className="rounded-xl p-1.5 text-slate-400 hover:bg-white/10 hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>

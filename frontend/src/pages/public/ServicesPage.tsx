@@ -11,6 +11,8 @@ import {
   BookOpen,
   ArrowUpRight,
   Sparkles,
+  Phone,
+  CheckCircle2,
 } from 'lucide-react';
 import { Service } from '../../types';
 import { apiClient } from '../../api/client';
@@ -24,8 +26,8 @@ export const ServicesPage: React.FC = () => {
     {
       slug: 'home-nursing-care',
       title: 'Home Nursing Care',
-      shortDescription: 'Professional clinical nursing support delivered with compassion. Sterile dressing changes, IV therapy, injection administration, and clinical assessment.',
-      category: 'CLINICAL CARE',
+      shortDescription: 'Professional nursing care tailored to your needs.',
+      category: 'NURSING CARE',
       durationMinutes: 120,
       basePrice: 4500,
       imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800',
@@ -33,9 +35,9 @@ export const ServicesPage: React.FC = () => {
     },
     {
       slug: 'elderly-care',
-      title: 'Elderly & Geriatric Support',
-      shortDescription: 'Compassionate, dignified, and attentive home care tailored specifically for senior loved ones. Daily living support, mobility assistance, and companionship.',
-      category: 'GERIATRIC CARE',
+      title: 'Elderly Care',
+      shortDescription: 'Compassionate care and assistance for seniors.',
+      category: 'SENIOR SUPPORT',
       durationMinutes: 180,
       basePrice: 3500,
       imageUrl: 'https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?auto=format&fit=crop&q=80&w=800',
@@ -43,9 +45,9 @@ export const ServicesPage: React.FC = () => {
     },
     {
       slug: 'post-surgery-care',
-      title: 'Post-Surgery Home Recovery',
+      title: 'Post-Surgery Care',
       category: 'REHABILITATION',
-      shortDescription: 'Comprehensive recovery and rehabilitation support following hospital discharge. Incision surveillance, infection mitigation, and pain management.',
+      shortDescription: 'Helping you heal safely and comfortably at home.',
       durationMinutes: 120,
       basePrice: 5000,
       imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800',
@@ -54,8 +56,8 @@ export const ServicesPage: React.FC = () => {
     {
       slug: 'medication-management',
       title: 'Medication Management',
-      category: 'CLINICAL CARE',
-      shortDescription: 'Reliable support with prescribed medication routines, schedules, multi-drug interaction reviews, and caregiver dosage tracking.',
+      category: 'CLINICAL ADHERENCE',
+      shortDescription: 'Safe medication reminders and administration.',
       durationMinutes: 60,
       basePrice: 2800,
       imageUrl: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&q=80&w=800',
@@ -63,19 +65,19 @@ export const ServicesPage: React.FC = () => {
     },
     {
       slug: 'palliative-care',
-      title: 'Palliative & Comfort Care',
-      category: 'HOLISTIC CARE',
-      shortDescription: 'Comfort, dignity, and quality-of-life focused holistic home care for patients with chronic conditions, accompanied by family counseling.',
+      title: 'Palliative Care',
+      category: 'HOLISTIC SUPPORT',
+      shortDescription: 'Dignified care focused on comfort and quality of life.',
       durationMinutes: 240,
       basePrice: 6000,
-      imageUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=800',
+      imageUrl: '/images/holistic-health.jpg',
       index: '05',
     },
     {
       slug: 'patient-escort',
-      title: 'Patient Medical Escort',
-      category: 'SUPPORT SERVICES',
-      shortDescription: 'Professional clinical bedside-to-appointment accompaniment for outpatient procedures, chemotherapy sessions, or dialysis transport.',
+      title: 'Patient Escort Services',
+      category: 'MOBILITY & ESCORT',
+      shortDescription: 'Assistance to and from medical appointments.',
       durationMinutes: 180,
       basePrice: 3800,
       imageUrl: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&q=80&w=800',
@@ -83,9 +85,9 @@ export const ServicesPage: React.FC = () => {
     },
     {
       slug: 'vital-signs-monitoring',
-      title: 'Vital Signs & Biomarkers',
-      category: 'DIAGNOSTIC CARE',
-      shortDescription: 'Systematic clinical monitoring of Blood Pressure, SpO2, Heart Rhythm, and Blood Glucose curves with digital logging and early trend alerts.',
+      title: 'Vital Signs Monitoring',
+      category: 'DIAGNOSTIC TELEMETRY',
+      shortDescription: 'Regular monitoring for your health and peace of mind.',
       durationMinutes: 60,
       basePrice: 2500,
       imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=800',
@@ -93,17 +95,17 @@ export const ServicesPage: React.FC = () => {
     },
     {
       slug: 'health-education',
-      title: 'Health & Caregiver Education',
+      title: 'Health Education',
       category: 'FAMILY TRAINING',
-      shortDescription: 'Hands-on practical training and clinical guidance for family caregivers on safe patient transfers, hygiene routines, and emergency protocols.',
+      shortDescription: 'Empowering you and your family with health knowledge.',
       durationMinutes: 90,
       basePrice: 3000,
-      imageUrl: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&q=80&w=800',
+      imageUrl: '/images/nutrition-wellness.jpg',
       index: '08',
     },
   ];
 
-  const categories = ['ALL', 'CLINICAL CARE', 'GERIATRIC CARE', 'REHABILITATION', 'DIAGNOSTIC CARE', 'HOLISTIC CARE', 'SUPPORT SERVICES', 'FAMILY TRAINING'];
+  const categories = ['ALL', 'NURSING CARE', 'SENIOR SUPPORT', 'REHABILITATION', 'CLINICAL ADHERENCE', 'HOLISTIC SUPPORT', 'MOBILITY & ESCORT', 'DIAGNOSTIC TELEMETRY', 'FAMILY TRAINING'];
 
   const filteredServices =
     activeCategory === 'ALL'
@@ -114,13 +116,34 @@ export const ServicesPage: React.FC = () => {
     <div className="py-12 sm:py-20 space-y-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Header Section */}
       <div className="space-y-4 max-w-3xl">
-        <div className="text-label">CLINICAL SERVICES / 08 DISCIPLINES</div>
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-display-massive text-white tracking-tight">
-          Comprehensive Clinical Home Care.
+        <div className="text-label">KOMFOCARE HOME-BASED SERVICES • 08 DISCIPLINES</div>
+        <h1 className="text-4xl sm:text-6xl font-extrabold font-display text-display-massive text-white tracking-tight leading-[1.15]">
+          Professional <span className="text-komfo-300">Home-Based Care</span> Services.
         </h1>
-        <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
-          Explore our eight specialized home-based healthcare disciplines delivered by certified, background-checked registered nurses and practitioners across Nairobi.
+        <p className="text-base sm:text-lg text-amber-300 font-semibold leading-relaxed">
+          "Compassionate care. Right at home."
         </p>
+        <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
+          We come to you, so you can stay where you feel safe. Explore our 8 detailed home-based care services delivered by certified, background-checked registered nurses and practitioners in Nairobi.
+        </p>
+      </div>
+
+      {/* 6 Pillars Quick Overview Bar */}
+      <div className="p-6 rounded-3xl glass-surface border border-white/10 space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] uppercase font-mono tracking-widest text-amber-400 font-bold">
+            Our Care Disciplines Overview
+          </span>
+          <span className="text-xs font-mono text-slate-400">Nairobi Metro</span>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-xs font-mono text-center">
+          <div className="p-3 rounded-2xl bg-white/5 border border-white/5 text-slate-200">Medical Doctors</div>
+          <div className="p-3 rounded-2xl bg-white/5 border border-white/5 text-slate-200">Nursing Team</div>
+          <div className="p-3 rounded-2xl bg-white/5 border border-white/5 text-slate-200">Physiotherapy</div>
+          <div className="p-3 rounded-2xl bg-white/5 border border-white/5 text-slate-200">Nutrition Services</div>
+          <div className="p-3 rounded-2xl bg-white/5 border border-white/5 text-slate-200">Care at Home</div>
+          <div className="p-3 rounded-2xl bg-white/5 border border-white/5 text-slate-200">Elderly & Chronic</div>
+        </div>
       </div>
 
       {/* Category Filter Chips Bar */}
@@ -156,7 +179,7 @@ export const ServicesPage: React.FC = () => {
                 alt={serv.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0f0514] via-[#0f0514]/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0d1428] via-[#0d1428]/40 to-transparent" />
 
               {/* Badges */}
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between">

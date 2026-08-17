@@ -36,50 +36,50 @@ export function getStatusBadgeVariant(status: string): {
     case 'COMPLETED':
     case 'PAID':
       return {
-        bg: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-        text: 'text-emerald-700',
-        border: 'border-emerald-200',
-        dot: 'bg-emerald-500',
+        bg: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+        text: 'text-emerald-300',
+        border: 'border-emerald-500/30',
+        dot: 'bg-emerald-400',
       };
     case 'CONFIRMED':
     case 'ASSIGNED':
     case 'IN_PROGRESS':
       return {
-        bg: 'bg-indigo-50 text-indigo-700 border-indigo-200',
-        text: 'text-indigo-700',
-        border: 'border-indigo-200',
-        dot: 'bg-indigo-500',
+        bg: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30',
+        text: 'text-indigo-300',
+        border: 'border-indigo-500/30',
+        dot: 'bg-indigo-400',
       };
     case 'PENDING_REVIEW':
     case 'ASSESSMENT':
     case 'PROCESSING':
       return {
-        bg: 'bg-amber-50 text-amber-700 border-amber-200',
-        text: 'text-amber-700',
-        border: 'border-amber-200',
-        dot: 'bg-amber-500',
+        bg: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+        text: 'text-amber-300',
+        border: 'border-amber-500/30',
+        dot: 'bg-amber-400',
       };
     case 'REQUESTED':
     case 'PENDING':
       return {
-        bg: 'bg-purple-50 text-purple-700 border-purple-200',
-        text: 'text-purple-700',
-        dot: 'bg-purple-500',
-        border: 'border-purple-200',
+        bg: 'bg-komfo-500/15 text-komfo-300 border-komfo-500/30',
+        text: 'text-komfo-300',
+        dot: 'bg-komfo-400',
+        border: 'border-komfo-500/30',
       };
     case 'CANCELLED':
     case 'FAILED':
       return {
-        bg: 'bg-rose-50 text-rose-700 border-rose-200',
-        text: 'text-rose-700',
-        border: 'border-rose-200',
-        dot: 'bg-rose-500',
+        bg: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
+        text: 'text-rose-300',
+        border: 'border-rose-500/30',
+        dot: 'bg-rose-400',
       };
     default:
       return {
-        bg: 'bg-slate-100 text-slate-700 border-slate-200',
-        text: 'text-slate-700',
-        border: 'border-slate-200',
+        bg: 'bg-white/10 text-slate-300 border-white/15',
+        text: 'text-slate-300',
+        border: 'border-white/15',
         dot: 'bg-slate-400',
       };
   }

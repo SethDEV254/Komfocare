@@ -245,22 +245,22 @@ export const AdminDashboard: React.FC = () => {
   return (
     <div className="space-y-8 max-w-7xl">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-navy-950 via-navy-900 to-komfo-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-elevated">
+      <div className="rounded-3xl p-6 sm:p-8 glass-surface border border-white/15 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-2xl">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-komfo-500/20 border border-komfo-400/30 text-komfo-300 text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/15 text-amber-400 text-xs font-mono font-semibold">
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Clinical Operations Control Center</span>
+            <span>CLINICAL OPERATIONS CONTROL CENTER</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold font-display">
+          <h2 className="text-2xl sm:text-4xl font-extrabold font-display">
             KomfoCare Operations Center
           </h2>
-          <p className="text-xs text-slate-300 max-w-xl">
+          <p className="text-xs text-slate-300 max-w-xl font-sans">
             Real-time pipeline of home care requests, clinician dispatch, patient records, and quality compliance.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="p-4 rounded-2xl bg-navy-900/80 border border-navy-700/80 text-center sm:text-right">
+        <div className="flex items-center gap-3 font-mono">
+          <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center sm:text-right">
             <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">System Status</span>
             <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 mt-0.5">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -272,41 +272,41 @@ export const AdminDashboard: React.FC = () => {
 
       {/* KPI Stats Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle space-y-1">
-          <span className="text-slate-500 text-xs font-medium">Pending Requests</span>
-          <div className="text-2xl font-bold font-display text-komfo-700">
+        <div className="p-5 rounded-2xl glass-card border border-white/10 shadow-xl space-y-1">
+          <span className="text-slate-400 text-xs font-medium">Pending Requests</span>
+          <div className="text-2xl font-bold font-display text-amber-400">
             {requests.filter((r) => r.status === 'REQUESTED' || r.status === 'PENDING_REVIEW').length}
           </div>
-          <span className="text-[11px] text-amber-600 font-semibold">Requires triage</span>
+          <span className="text-[11px] text-amber-400/90 font-semibold font-mono">Requires triage</span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle space-y-1">
-          <span className="text-slate-500 text-xs font-medium">Active Appointments</span>
-          <div className="text-2xl font-bold font-display text-navy-900">{appointments.length}</div>
-          <span className="text-[11px] text-emerald-600 font-semibold">Clinicians deployed</span>
+        <div className="p-5 rounded-2xl glass-card border border-white/10 shadow-xl space-y-1">
+          <span className="text-slate-400 text-xs font-medium">Active Appointments</span>
+          <div className="text-2xl font-bold font-display text-white">{appointments.length}</div>
+          <span className="text-[11px] text-emerald-400 font-semibold font-mono">Clinicians deployed</span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle space-y-1">
-          <span className="text-slate-500 text-xs font-medium">Registered Patients</span>
-          <div className="text-2xl font-bold font-display text-navy-900">48</div>
-          <span className="text-[11px] text-indigo-600 font-semibold">Across Nairobi metro</span>
+        <div className="p-5 rounded-2xl glass-card border border-white/10 shadow-xl space-y-1">
+          <span className="text-slate-400 text-xs font-medium">Registered Patients</span>
+          <div className="text-2xl font-bold font-display text-white">48</div>
+          <span className="text-[11px] text-komfo-400 font-semibold font-mono">Across Nairobi metro</span>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle space-y-1">
-          <span className="text-slate-500 text-xs font-medium">Monthly Revenue (KES)</span>
-          <div className="text-2xl font-bold font-display text-navy-900">428,500</div>
-          <span className="text-[11px] text-emerald-600 font-semibold">↑ 18.4% vs last month</span>
+        <div className="p-5 rounded-2xl glass-card border border-white/10 shadow-xl space-y-1">
+          <span className="text-slate-400 text-xs font-medium">Monthly Revenue (KES)</span>
+          <div className="text-2xl font-bold font-display text-emerald-400">428,500</div>
+          <span className="text-[11px] text-emerald-400 font-semibold font-mono">↑ 18.4% vs last month</span>
         </div>
       </div>
 
       {/* Main Operations Tabs */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-subtle space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+      <div className="rounded-3xl p-6 sm:p-8 glass-card border border-white/15 shadow-2xl space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
           <div>
-            <h3 className="text-lg font-bold font-display text-navy-900">
+            <h3 className="text-lg font-bold font-display text-white">
               Service Requests Pipeline
             </h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400 font-sans">
               Review intake requests, transition status, and assign healthcare professionals.
             </p>
           </div>
@@ -318,7 +318,7 @@ export const AdminDashboard: React.FC = () => {
               placeholder="Search by patient, ref, city..."
               value={filterText}
               onChange={(e) => setFilterText(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:ring-2 focus:ring-komfo-500 focus:outline-none"
+              className="w-full pl-9 pr-3 py-2 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-500 text-xs focus:ring-2 focus:ring-komfo-500 focus:outline-none focus:border-komfo-400"
             />
           </div>
         </div>
@@ -327,7 +327,7 @@ export const AdminDashboard: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-200 text-slate-400 uppercase tracking-wider font-bold text-[10px]">
+              <tr className="border-b border-white/10 text-slate-400 uppercase tracking-wider font-mono font-bold text-[10px]">
                 <th className="py-3 px-3">Reference</th>
                 <th className="py-3 px-3">Patient & Location</th>
                 <th className="py-3 px-3">Requested Care</th>
@@ -336,36 +336,36 @@ export const AdminDashboard: React.FC = () => {
                 <th className="py-3 px-3 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-white/10 font-sans">
               {filteredRequests.map((req) => {
                 const badge = getStatusBadgeVariant(req.status);
                 return (
-                  <tr key={req.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-4 px-3 font-mono font-bold text-navy-900">
+                  <tr key={req.id} className="hover:bg-white/5 transition-colors">
+                    <td className="py-4 px-3 font-mono font-bold text-amber-400">
                       {req.referenceNumber}
                     </td>
 
                     <td className="py-4 px-3">
-                      <p className="font-bold text-navy-900">{req.patientName}</p>
-                      <p className="text-[11px] text-slate-500 truncate max-w-xs">{req.patientLocation}, {req.city}</p>
-                      <p className="text-[10px] text-slate-400">{req.patientPhone}</p>
+                      <p className="font-bold text-white font-display">{req.patientName}</p>
+                      <p className="text-[11px] text-slate-300 truncate max-w-xs">{req.patientLocation}, {req.city}</p>
+                      <p className="text-[10px] text-slate-400 font-mono">{req.patientPhone}</p>
                     </td>
 
                     <td className="py-4 px-3">
-                      <span className="font-semibold text-komfo-700 block">
+                      <span className="font-semibold text-komfo-300 block">
                         {req.service?.title || 'General Care'}
                       </span>
-                      <p className="text-[11px] text-slate-600 line-clamp-1 max-w-xs">
+                      <p className="text-[11px] text-slate-400 line-clamp-1 max-w-xs">
                         {req.careRequirements}
                       </p>
                     </td>
 
-                    <td className="py-4 px-3">
-                      <p className="font-semibold text-slate-800">{formatDate(req.preferredDate)}</p>
+                    <td className="py-4 px-3 font-mono">
+                      <p className="font-semibold text-white">{formatDate(req.preferredDate)}</p>
                       <p className="text-[10px] text-slate-400">{req.preferredTimeSlot}</p>
                     </td>
 
-                    <td className="py-4 px-3">
+                    <td className="py-4 px-3 font-mono">
                       <span
                         className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold border ${badge.bg}`}
                       >
@@ -373,20 +373,20 @@ export const AdminDashboard: React.FC = () => {
                       </span>
                     </td>
 
-                    <td className="py-4 px-3 text-right">
+                    <td className="py-4 px-3 text-right font-mono">
                       <select
                         value={req.status}
                         onChange={(e) => handleStatusChange(req.id, e.target.value as RequestStatus)}
-                        className="bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:border-komfo-500 focus:outline-none"
+                        className="bg-[#12071d] border border-white/15 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-200 hover:border-komfo-400 focus:outline-none"
                       >
-                        <option value="REQUESTED">Requested</option>
-                        <option value="PENDING_REVIEW">Pending Review</option>
-                        <option value="ASSESSMENT">Assessment</option>
-                        <option value="CONFIRMED">Confirmed</option>
-                        <option value="ASSIGNED">Assigned</option>
-                        <option value="IN_PROGRESS">In Progress</option>
-                        <option value="COMPLETED">Completed</option>
-                        <option value="CANCELLED">Cancelled</option>
+                        <option value="REQUESTED" className="bg-[#12071d] text-white">Requested</option>
+                        <option value="PENDING_REVIEW" className="bg-[#12071d] text-white">Pending Review</option>
+                        <option value="ASSESSMENT" className="bg-[#12071d] text-white">Assessment</option>
+                        <option value="CONFIRMED" className="bg-[#12071d] text-white">Confirmed</option>
+                        <option value="ASSIGNED" className="bg-[#12071d] text-white">Assigned</option>
+                        <option value="IN_PROGRESS" className="bg-[#12071d] text-white">In Progress</option>
+                        <option value="COMPLETED" className="bg-[#12071d] text-white">Completed</option>
+                        <option value="CANCELLED" className="bg-[#12071d] text-white">Cancelled</option>
                       </select>
                     </td>
                   </tr>

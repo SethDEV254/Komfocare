@@ -5,12 +5,13 @@ import {
   Phone,
   Mail,
   MapPin,
-  ShieldCheck,
   Clock,
-  ArrowRight,
-  ArrowUpRight,
-  ShieldAlert,
   Send,
+  Globe,
+  QrCode,
+  Sparkles,
+  ShieldCheck,
+  User,
 } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -23,12 +24,12 @@ export const Footer: React.FC = () => {
         {/* Top Newsletter / Quick Consultation Row */}
         <div className="p-8 sm:p-12 rounded-3xl bg-[#0e0413] border border-white/10 flex flex-col lg:flex-row lg:items-center justify-between gap-8 shadow-2xl">
           <div className="space-y-2 max-w-xl">
-            <div className="text-label">NEWSLETTER & CLINICAL UPDATES</div>
+            <div className="text-label">NEWSLETTER & HEALTH UPDATES</div>
             <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-white tracking-tight">
-              Stay Informed on Home Health Best Practices.
+              Compassionate Care. Right at Home.
             </h3>
             <p className="text-xs text-slate-400 font-sans leading-relaxed">
-              Subscribe for evidence-based home recovery guides, geriatric care insights, and service expansions in Nairobi.
+              We come to you, so you can stay where you feel safe. Subscribe for health guides, elderly care insights, and service updates in Nairobi.
             </p>
           </div>
 
@@ -57,37 +58,82 @@ export const Footer: React.FC = () => {
 
         {/* Main Grid Columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
-          {/* Col 1 & 2: Brand Story */}
+          {/* Col 1 & 2: Brand Story & Founder */}
           <div className="lg:col-span-2 space-y-5">
             <Link to="/" className="flex items-center gap-3 group">
               <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-komfo-600 to-amber-500 flex items-center justify-center text-white shadow-glow group-hover:scale-105 transition-transform">
                 <Heart className="w-5 h-5 fill-white/20" />
               </div>
-              <span className="text-2xl font-bold font-display tracking-tight text-white">
-                Komfo<span className="text-komfo-400">Care</span>
-              </span>
+              <div>
+                <span className="text-xl font-bold font-display tracking-tight text-white block">
+                  KOMFOCARE
+                </span>
+                <span className="text-[10px] uppercase font-mono tracking-widest text-amber-400 font-bold block">
+                  HOME-BASED SERVICES
+                </span>
+              </div>
             </Link>
 
             <p className="text-xs text-slate-400 max-w-sm leading-relaxed font-sans">
-              <strong className="text-white">Compassionate Care, Right at Home.</strong>
+              <strong className="text-white">Professional care. Personal touch. Peace of mind.</strong>
               <br />
-              Professional home healthcare connecting families across the Nairobi metropolitan area with licensed registered nurses, geriatric specialists, and clinical rehabilitation care.
+              We bring quality care to you, so you can focus on what matters most. Providing personalized home healthcare across Nairobi, Kenya.
             </p>
 
-            <div className="flex items-center gap-2 pt-1">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono uppercase text-emerald-400">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                Clinical Dispatch Online
+            {/* Founder Note */}
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs font-mono space-y-1">
+              <div className="flex items-center gap-2 text-amber-400 font-bold text-[11px]">
+                <User className="w-3.5 h-3.5" />
+                <span>Founder: OBIERO SHANICE AUMA</span>
+              </div>
+              <p className="text-[11px] text-slate-400">
+                Executive Contact:{' '}
+                <a href="mailto:obieroshanice@gmail.com" className="text-slate-300 hover:text-white underline">
+                  obieroshanice@gmail.com
+                </a>
+              </p>
+            </div>
+
+            {/* Social Media Links */}
+            <div className="pt-2">
+              <span className="text-[10px] uppercase font-mono tracking-widest text-slate-400 block mb-2 font-bold">
+                Connect With Us
               </span>
+              <div className="flex items-center flex-wrap gap-2 text-xs font-mono">
+                <a
+                  href="https://facebook.com/KomfoCare"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:border-komfo-400 hover:text-white transition-colors"
+                >
+                  Facebook: KomfoCare
+                </a>
+                <a
+                  href="https://instagram.com/KomfoCare"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:border-komfo-400 hover:text-white transition-colors"
+                >
+                  Instagram: @KomfoCare
+                </a>
+                <a
+                  href="https://x.com/KomfoCare"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:border-komfo-400 hover:text-white transition-colors"
+                >
+                  Twitter/X: @KomfoCare
+                </a>
+              </div>
             </div>
           </div>
 
           {/* Col 3: Care Services */}
           <div>
             <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] font-mono text-amber-400 mb-4">
-              Care Disciplines
+              Our Services
             </h4>
-            <ul className="space-y-2.5 text-xs text-slate-400">
+            <ul className="space-y-2 text-xs text-slate-400">
               <li>
                 <Link to="/services/home-nursing-care" className="hover:text-white transition-colors">
                   Home Nursing Care
@@ -95,12 +141,12 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/services/elderly-care" className="hover:text-white transition-colors">
-                  Elderly Care & Support
+                  Elderly Care
                 </Link>
               </li>
               <li>
                 <Link to="/services/post-surgery-care" className="hover:text-white transition-colors">
-                  Post-Surgery Recovery
+                  Post-Surgery Care
                 </Link>
               </li>
               <li>
@@ -110,7 +156,12 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/services/palliative-care" className="hover:text-white transition-colors">
-                  Palliative & Comfort Care
+                  Palliative Care
+                </Link>
+              </li>
+              <li>
+                <Link to="/services/patient-escort" className="hover:text-white transition-colors">
+                  Patient Escort Services
                 </Link>
               </li>
               <li>
@@ -118,13 +169,18 @@ export const Footer: React.FC = () => {
                   Vital Signs Monitoring
                 </Link>
               </li>
+              <li>
+                <Link to="/services/health-education" className="hover:text-white transition-colors">
+                  Health Education
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Col 4: Platform & Portals */}
+          {/* Col 4: Platform & Navigation */}
           <div>
             <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] font-mono text-amber-400 mb-4">
-              Platform & Access
+              Navigation
             </h4>
             <ul className="space-y-2.5 text-xs text-slate-400">
               <li>
@@ -134,12 +190,12 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/professionals" className="hover:text-white transition-colors">
-                  Clinicians Directory
+                  Healthcare Professionals
                 </Link>
               </li>
               <li>
                 <Link to="/resources" className="hover:text-white transition-colors">
-                  Health Resources
+                  Health Resources & Guides
                 </Link>
               </li>
               <li>
@@ -148,45 +204,58 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/login" className="hover:text-white transition-colors">
-                  Portal Login / Demo Access
+                <Link to="/book-care" className="hover:text-white transition-colors font-bold text-amber-300">
+                  Book Care Today
                 </Link>
               </li>
               <li>
-                <Link to="/book-care" className="hover:text-white transition-colors">
-                  Book Home Visit
+                <Link to="/contact" className="hover:text-white transition-colors">
+                  Contact Us
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 5: Contact Coordinates */}
+          {/* Col 5: Contact Coordinates & QR */}
           <div>
             <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] font-mono text-amber-400 mb-4">
-              Coordinates
+              Contact Us
             </h4>
             <ul className="space-y-3 text-xs text-slate-400">
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-komfo-400 flex-shrink-0 mt-0.5" />
-                <span>Riverside Square, Westlands, Nairobi, Kenya</span>
+                <span>Nairobi, Kenya</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-komfo-400 flex-shrink-0" />
-                <a href="tel:+254700000000" className="hover:text-white font-mono">
-                  +254 700 000 000
+                <a href="tel:0792004232" className="hover:text-white font-mono font-bold text-slate-200">
+                  0792004232
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-komfo-400 flex-shrink-0" />
-                <a href="mailto:care@komfocare.com" className="hover:text-white font-mono">
-                  care@komfocare.com
+                <a href="mailto:komfocare@gmail.com" className="hover:text-white font-mono text-slate-200">
+                  komfocare@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-komfo-400 flex-shrink-0" />
-                <span>Mon – Sun: 07:00 AM – 09:00 PM</span>
+                <Globe className="w-4 h-4 text-komfo-400 flex-shrink-0" />
+                <span className="font-mono">www.komfocare.com</span>
               </li>
             </ul>
+
+            {/* Quick QR Connect Widget */}
+            <div className="mt-4 p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-amber-400 flex-shrink-0">
+                <QrCode className="w-5 h-5" />
+              </div>
+              <div className="text-[11px] font-mono leading-tight">
+                <span className="text-white font-bold block">Scan to connect</span>
+                <a href="tel:0792004232" className="text-amber-400 hover:underline">
+                  0792004232
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -199,10 +268,10 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Disclaimers & Copyright */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-slate-500 pt-4">
-          <p>© {new Date().getFullYear()} KomfoCare Platform. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} KOMFOCARE HOME-BASED SERVICES. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <span className="text-amber-400/80">Scheduled Home Care Service</span>
-            <span>Privacy & Clinical Compliance</span>
+            <span className="text-amber-400/80">Compassionate Care. Right at Home.</span>
+            <span>Nairobi, Kenya</span>
           </div>
         </div>
       </div>
