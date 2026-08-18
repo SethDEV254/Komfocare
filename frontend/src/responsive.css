@@ -1,0 +1,22 @@
+/* Responsive navigation refinements for KomfoCare */
+@media (max-width: 639px) {
+  header.sticky { padding-left: .5rem; padding-right: .5rem; padding-top: .5rem; padding-bottom: .5rem; }
+  header.sticky > div { max-width: 100%; }
+  header.sticky > div > div { min-width: 0; gap: .5rem; }
+  header.sticky a[href="/"] img { width: 2.25rem; height: 2.25rem; }
+  header.sticky a[href="/"] > div { min-width: 0; }
+  header.sticky a[href="/"] span:first-child { font-size: .95rem; }
+  header.sticky .flex.items-center.gap-2.sm\\:gap-3 { min-width: 0; flex: 1; justify-content: flex-end; }
+  header.sticky a[href="/book-care"] { padding-left: .75rem; padding-right: .75rem; white-space: nowrap; }
+  header.sticky a[href="/book-care"] span { display: none; }
+  header.sticky a[href="/book-care"] svg { width: 1rem; height: 1rem; }
+  header.sticky button[aria-label="Toggle Theme"], header.sticky button[aria-label="Open Fullscreen Menu"] { flex: 0 0 auto; }
+}
+@media (max-width: 380px) {
+  header.sticky a[href="/"] > div { display: none; }
+  header.sticky a[href="/book-care"] { width: 2.25rem; height: 2.25rem; padding: 0; justify-content: center; }
+}
+@media (max-height: 700px) {
+  .fixed.inset-0.z-50 .overflow-y-auto { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+}
+.fixed.inset-0.z-50 a { overflow-wrap: anywhere; }
