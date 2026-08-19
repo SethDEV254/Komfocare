@@ -27,9 +27,8 @@ import { PatientDashboard } from './pages/dashboard/PatientDashboard';
 import { ProfessionalDashboard } from './pages/dashboard/ProfessionalDashboard';
 import { AdminDashboard } from './pages/dashboard/AdminDashboard';
 
-// Protected Route Guard
-const ProtectedDashboardRoute: React.FC<{ children?: React.ReactNode }> = () => {
-  const { user, isLoading } = useAuth();
+const ProtectedDashboardRoute: React.FC = () => {
+  const { isLoading } = useAuth();
 
   if (isLoading) {
     return (
@@ -39,16 +38,19 @@ const ProtectedDashboardRoute: React.FC<{ children?: React.ReactNode }> = () => 
     );
   }
 
-  // Allow access for testing or redirect to login
   return <DashboardLayout />;
 };
 
 export const App: React.FC = () => {
   return (
     <AuthProvider>
-      <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <Router
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
         <Routes>
-          {/* Public Routes with PublicLayout */}
           <Route element={<PublicLayout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
@@ -66,7 +68,6 @@ export const App: React.FC = () => {
             <Route path="*" element={<NotFoundPage />} />
           </Route>
 
-          {/* Protected Dashboard Routes */}
           <Route path="/dashboard" element={<ProtectedDashboardRoute />}>
             <Route index element={<Navigate to="/dashboard/patient" replace />} />
             <Route path="patient" element={<PatientDashboard />} />
