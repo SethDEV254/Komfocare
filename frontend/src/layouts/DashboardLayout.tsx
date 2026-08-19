@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   Heart,
@@ -10,18 +10,15 @@ import {
   FileText,
   Activity,
   CreditCard,
-  Bell,
   BookOpen,
   MessageSquareQuote,
   ShieldCheck,
   MapPin,
   FileSpreadsheet,
-  Settings,
   LogOut,
   Menu,
   X,
   PlusCircle,
-  ShieldAlert,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -33,8 +30,8 @@ export const DashboardLayout: React.FC = () => {
 
   const role = user?.role || 'PATIENT';
 
-  // Navigation config per role
-  const getNavLinks = () => {
+  // Memoize navigation links so they are only rebuilt when the user's role changes.
+  const navLinks = useMemo(() => {
     if (role === 'ADMIN' || role === 'SUPER_ADMIN') {
       return [
         { label: 'Operations Overview', path: '/dashboard/admin', icon: LayoutDashboard },
@@ -62,7 +59,6 @@ export const DashboardLayout: React.FC = () => {
       ];
     }
 
-    // Patient / Caregiver
     return [
       { label: 'My Care Portal', path: '/dashboard/patient', icon: LayoutDashboard },
       { label: 'Upcoming Home Visits', path: '/dashboard/patient?tab=visits', icon: Calendar },
@@ -70,9 +66,7 @@ export const DashboardLayout: React.FC = () => {
       { label: 'Care Plan & Goals', path: '/dashboard/patient?tab=careplan', icon: ShieldCheck },
       { label: 'Billing & Invoices', path: '/dashboard/patient?tab=billing', icon: CreditCard },
     ];
-  };
-
-  const navLinks = getNavLinks();
+  }, [role]);
 
   return (
     <div className="min-h-screen flex bg-[#080d1a] text-slate-100">
@@ -97,18 +91,22 @@ export const DashboardLayout: React.FC = () => {
               <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-komfo-600 to-amber-500 flex items-center justify-center text-white shadow-glow group-hover:scale-105 transition-transform">
                 <Heart className="w-5 h-5 fill-white/20" />
               </div>
+
               <div>
                 <span className="text-xl font-bold font-display tracking-tight text-white">
                   Komfo<span className="text-komfo-400">Care</span>
                 </span>
+
                 <span className="block text-[9px] uppercase tracking-wider text-amber-400 font-mono font-bold">
                   {role.replace('_', ' ')} PORTAL
                 </span>
               </div>
             </Link>
+
             <button
               onClick={() => setSidebarOpen(false)}
               className="lg:hidden p-1 text-slate-400 hover:text-white"
+              aria-label="Close navigation menu"
             >
               <X className="w-5 h-5" />
             </button>
@@ -119,11 +117,14 @@ export const DashboardLayout: React.FC = () => {
             <span className="px-3 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 block mb-2">
               Navigation
             </span>
+
             {navLinks.map((item) => {
               const Icon = item.icon;
+
               const isActive =
                 location.pathname + location.search === item.path ||
-                (item.path.includes('?') && location.search.includes(item.path.split('?')[1])) ||
+                (item.path.includes('?') &&
+                  location.search.includes(item.path.split('?')[1])) ||
                 (!location.search && item.path === location.pathname);
 
               return (
@@ -147,8 +148,14 @@ export const DashboardLayout: React.FC = () => {
           {/* Book visit quick CTA for patient */}
           {role === 'PATIENT' && (
             <div className="p-4 mx-3 mb-4 rounded-2xl bg-white/5 border border-white/10 text-center">
-              <p className="text-xs font-bold text-white mb-1">Need a Home Visit?</p>
-              <p className="text-[11px] text-slate-400 mb-3 font-sans">Schedule clinical nursing or elderly care.</p>
+              <p className="text-xs font-bold text-white mb-1">
+                Need a Home Visit?
+              </p>
+
+              <p className="text-[11px] text-slate-400 mb-3 font-sans">
+                Schedule clinical nursing or elderly care.
+              </p>
+
               <Link
                 to="/book-care"
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-komfo-600 to-indigo-600 hover:from-komfo-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-wider shadow-glow w-full justify-center"
@@ -166,9 +173,15 @@ export const DashboardLayout: React.FC = () => {
                 <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center font-bold text-white text-xs font-mono">
                   {user?.fullName?.charAt(0) || 'U'}
                 </div>
+
                 <div className="truncate">
-                  <p className="text-xs font-bold text-white truncate">{user?.fullName || 'Active User'}</p>
-                  <p className="text-[10px] text-slate-400 truncate">{user?.email}</p>
+                  <p className="text-xs font-bold text-white truncate">
+                    {user?.fullName || 'Active User'}
+                  </p>
+
+                  <p className="text-[10px] text-slate-400 truncate">
+                    {user?.email}
+                  </p>
                 </div>
               </div>
 
@@ -178,6 +191,7 @@ export const DashboardLayout: React.FC = () => {
                   navigate('/login');
                 }}
                 title="Sign Out"
+                aria-label="Sign Out"
                 className="p-2 text-slate-400 hover:text-rose-400 hover:bg-white/5 rounded-xl transition-colors"
               >
                 <LogOut className="w-4 h-4" />
@@ -195,9 +209,11 @@ export const DashboardLayout: React.FC = () => {
             <button
               onClick={() => setSidebarOpen(true)}
               className="lg:hidden p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl"
+              aria-label="Open navigation menu"
             >
               <Menu className="w-5 h-5" />
             </button>
+
             <div>
               <h1 className="text-base font-bold font-display text-white tracking-tight">
                 {role === 'ADMIN' || role === 'SUPER_ADMIN'
